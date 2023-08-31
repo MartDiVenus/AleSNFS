@@ -6,7 +6,7 @@ archives; scientific notation  of files' size.
 alearchiver: compression of files/dirs and extraction of archives, only for
 some formats.
 
-luxdim, valedim: a my [with the international backgroud] scientific notation 
+luxdim, valedim: a my [with international backgroud] scientific notation 
 of files' size.
 
 
@@ -43,7 +43,8 @@ luxdim, valedim: very unique useful tools.
 
 :~$ luxdim -h
 
-valedim: It prints on the stdout and writes on /tmp/valeNetrw-BmOutput.
+valedim: It prints on the stdout  and  writes on /tmp/valeNetrw-BmOutput, the 
+size of file/s selected by [mf][fm] (ValeNetrw).
 
 
 # Usage
