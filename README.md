@@ -28,11 +28,11 @@ valedim: interoperability of ValeNetrw.
 luxdim, valedim: very unique useful tools.
 
 
-# Installing
+# Installation
 
-:~$ tar xvz AleSNFS-1.0.0.tar.xz
+:~$ tar xvz AleSNFS-\$version.tar.xz
 
-:~$ cd AleSNFS-1.0.0
+:~$ cd AleSNFS-\$version
 
 :~$ ./installAleaValLuxDim.sh
 
