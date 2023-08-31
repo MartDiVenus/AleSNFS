@@ -12,8 +12,9 @@ of files' size.
 
 # Interesting subjects
 
-alearchiver: bash options, I demonstrated that it is also possibile for bash:
+alearchiver: bash options, I demonstrated that it is also possibile for bash,
 see 
+
 :~$ alearchiver -h
 
 alearchiver: vim's read(),  vim's write(),  vim's input(), in  alearchiver by 
