@@ -10,5 +10,5 @@ _______________
 Corrected alearchiver full interactive mode alpha, beta choices.
 
 				* Improvement #1
-Improved the help.
+Improved help.
 
