@@ -35,7 +35,7 @@ luxdim improved
 
 	- Residual files deleted.
 
-	- output on stdout and in /tmp/outluxdim.
+	- Output on stdout and in /tmp/outluxdim.
 
 
 valedim improved
@@ -46,7 +46,7 @@ valedim improved
 
 	- Residual files deleted.
 
-	- output on stdout, in /tmp/outvaledim, and in /tmp/valeNetrw-BmOutput.
+	- Output on stdout, in /tmp/outvaledim, and in /tmp/valeNetrw-BmOutput.
 
 _______________
 
