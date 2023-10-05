@@ -25,8 +25,6 @@ alearchiver.
 
 valedim: interoperability of ValeNetrw.
 
-luxdim, valedim: very unique useful tools.
-
 
 # Installation
 
@@ -53,13 +51,26 @@ size of file/s selected by [mf][fm] (ValeNetrw).
 
 :~$ alearchiver -option ... -option file/dir [see help instance] 
 
-:~$ luxdim
+:~$ luxdim ...
 
-:~$ valedim
+:~$ valedim ...
 
 
-# Warranty
+# Warranty and Copyright
 
-I've not tested alearchiver for every jar section, for time reasons.
+Copyright (C) 2019.04.07 Mario Fantini marfant7@gmail.com
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
 
-jgrasp: I'm coming to your golden lightness.
+Bash copyright applies to its Mario Fantini's pseudo options usage.
+GNU copyright applies to its Mario Fantini's GNU tools usage.
+VIM copyright applies to its Mario Fantini's VIM usage.
+PERL opyright applies to its Mario Fantini's VIM usage.
+And so on.
+
+
+
+
+
