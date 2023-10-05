@@ -19,16 +19,16 @@ _______________
 alearchiver improved
 
 	- Selection of files by wildcard * added.
-		You can use *, or *.extension, or [pattern]*;
+		You can express *, or *.extension, or [pattern]*;
 		without conditions.
 
-	-  ```-f``` option added to select files or folders/directories.
+	- -f option added to select files or folders/directories.
 
 
 luxdim improved
 
 	- Selection of files by wildcard * added.
-	  You can use *, or *.extension, or [pattern]*;
+	  You can express *, or *.extension, or [pattern]*;
 	  without conditions.
 
 	- Notation improved.
@@ -42,7 +42,7 @@ valedim improved
 
 	- Notation improved.
 
-	- ```-b, -k, -m, -g``` options added.
+	- -b, -k, -m, -g options added.
 
 	- Residual files deleted.
 
