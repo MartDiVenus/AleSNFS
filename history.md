@@ -19,34 +19,38 @@ _______________
 alearchiver improved
 
 	- Selection of files by wildcard * added.
-		You can express *, or *.extension, or [pattern]*;
+		You can use *, or *.extension, or [pattern]*;
 		without conditions.
 
-	- -f option added to select files or folders/directories.
+	-  ```-f``` option added to select files or folders/directories.
 
 
 luxdim improved
 
 	- Selection of files by wildcard * added.
-	  You can express *, or *.extension, or [pattern]*;
+	  You can use *, or *.extension, or [pattern]*;
 	  without conditions.
 
 	- Notation improved.
 
 	- Residual files deleted.
 
-	- Output on stdout and in /tmp/outluxdim.
+	- output on stdout and in /tmp/outluxdim.
 
 
 valedim improved
 
 	- Notation improved.
 
-	- -b, -k, -m, -g options added.
+	- ```-b, -k, -m, -g``` options added.
 
 	- Residual files deleted.
 
-	- Output on stdout, in /tmp/outvaledim, and in /tmp/valeNetrw-BmOutput.
+	- output on stdout, in /tmp/outvaledim, and in /tmp/valeNetrw-BmOutput.
 
 _______________
+
+	v2.0.0: May 20, 2024	
+
+various improvements, corrections, new features.
 
