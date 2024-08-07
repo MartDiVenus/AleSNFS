@@ -52,5 +52,6 @@ _______________
 
 	v2.0.0: May 20, 2024	
 
-various improvements, corrections, new features.
+Various improvements, corrections, new features.
+Soon, AleSNFS v2.0.0.0 GnuPg sign.
 
