@@ -54,5 +54,5 @@ _______________
 
 Various improvements, corrections, new features.
 
-Soon, AleSNFS v2.0.0.0 GnuPg sign.
+Soon, AleSNFS v2.0.0.0 GnuPG signature too.
 
