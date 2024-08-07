@@ -1,0 +1,22 @@
+Scegli il percorso di destinazione del file compresso:
+	
+	
+
+alpha) lo stesso del relativo file non compresso;
+	
+	
+
+beta) esprimi un nuovo percorso.
+	
+	
+
+gamma) usa comodamente i percorsi di destinazione specificati in
+       /tmp/valeNetrwDMarked
+	
+	
+	
+
+Digita il <<alpha>> o <<beta>> o <<gamma>> e premi Enter.
+	
+
+
