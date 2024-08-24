@@ -54,5 +54,14 @@ _______________
 
 Various improvements, corrections, new features.
 
-Soon, AleSNFS v2.0.0.0 GnuPG signature too.
+Soon, AleSNFS v2.0.0 GnuPG signature too.
+
+_______________
+
+	v2.1.0: Aug 24, 2024	
+
+Various corrections.
+Added youtube tutorial about luxdim, valedim; see README.md (Links) or luxdim, valedim help.
+
+Soon, AleSNFS v2.1.0 GnuPG signature too.
 
