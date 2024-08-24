@@ -1,5 +1,5 @@
 # AleSNFS
-archives; scientific notation  of files' size.
+archives; a personal scientific notation  of files' size.
 
 # Intro
 
@@ -54,6 +54,11 @@ size of file/s selected by [mf][fm] (ValeNetrw).
 :~$ luxdim ...
 
 :~$ valedim ...
+
+
+# Links
+youtube tutorial about luxdim, valedim
+https://youtu.be/wXrcPyFcFG0
 
 
 # Warranty and Copyright
