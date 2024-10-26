@@ -50,7 +50,7 @@ leggoBytes=$(cat /tmp/alearchiver-dirOrFile-03)
 if test $leggoBytes -gt 0
 
 then
-	/usr/local/lib/backemerg/trattamentoCartelleClassic.sh
+	/usr/local/lib/backemerg/trattamentoCartelle.sh
 
 	echo "cartella" > /tmp/alearchiver-cimiceFolderOrFile-cartella
 
