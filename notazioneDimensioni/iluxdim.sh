@@ -1247,76 +1247,149 @@ if test $leggoOptionLess == "g"
 then
 
 	leggoPrefissoGiga="$(cat /tmp/iluxdimPrefissoGiga)"
-echo " "
-echo "$pathNameFile"
-echo "$leggoPrefissoGiga$(cat /tmp/backemerg-statGiga) giga bytes"
-echo " "
-
+#echo " "
+#echo "$pathNameFile"
+#echo "$leggoPrefissoGiga$(cat /tmp/backemerg-statGiga) giga bytes"
+#echo " "
+echo "$pathNameFile"  | tee -a /tmp/outIluxdim &> /dev/null
 echo "$leggoPrefissoGiga$(cat /tmp/backemerg-statGiga) giga bytes" | tee -a /tmp/outIluxdim &> /dev/null
+
+cat /tmp/outIluxdim | tail -n1 | cut -d. -f1,1 | sed 's/,/\\033\[32;40;5m\\033\[1m,\\033\[0m/g' > /tmp/outIluxdim-sx
+sx=$(cat /tmp/outIluxdim-sx)
+cat /tmp/outIluxdim | tail -n1 | cut -d. -f2,2 | sed 's/,/\\033\[31;40;5m\\033\[1m,\\033\[0m/g' > /tmp/outIluxdim-dx
+dx=$(cat /tmp/outIluxdim-dx)
+
+echo ""
+echo "$pathNameFile"
+echo -e "$sx\033[33;40;5m\033[1m.\033[0m$dx"
+echo ""
+
 fi
 
 if test $leggoOptionLess == "m"
 
 then
 
-	leggoPrefissoGiga="$(cat /tmp/iluxdimPrefissoMega)"
-echo " "
+	leggoPrefissoMega="$(cat /tmp/iluxdimPrefissoMega)"
+#echo " "
+#echo "$pathNameFile"
+#echo "$leggoPrefissoMega$(cat /tmp/backemerg-statMega) mega bytes"
+#echo " "
+echo "$pathNameFile"  | tee -a /tmp/outIluxdim &> /dev/null
+echo "$leggoPrefissoMega$(cat /tmp/backemerg-statMega) mega bytes" | tee -a /tmp/outIluxdim &> /dev/null
+
+cat /tmp/outIluxdim | tail -n1 | cut -d. -f1,1 | sed 's/,/\\033\[32;40;5m\\033\[1m,\\033\[0m/g' > /tmp/outIluxdim-sx
+sx=$(cat /tmp/outIluxdim-sx)
+cat /tmp/outIluxdim | tail -n1 | cut -d. -f2,2 | sed 's/,/\\033\[31;40;5m\\033\[1m,\\033\[0m/g' > /tmp/outIluxdim-dx
+dx=$(cat /tmp/outIluxdim-dx)
+
+echo ""
 echo "$pathNameFile"
-echo "$leggoPrefissoGiga$(cat /tmp/backemerg-statMega) mega bytes"
-echo " "
-echo "$leggoPrefissoGiga$(cat /tmp/backemerg-statMega) mega bytes" | tee -a /tmp/outIluxdim &> /dev/null
+echo -e "$sx\033[33;40;5m\033[1m.\033[0m$dx"
+echo ""
+
 fi
 
 if test $leggoOptionLess == "k"
 
 then
 
-	leggoPrefissoGiga="$(cat /tmp/iluxdimPrefissoKilo)"
+	leggoPrefissoKilo="$(cat /tmp/iluxdimPrefissoKilo)"
 
-echo " "
+#echo " "
+#echo "$pathNameFile"
+#echo "$leggoPrefissoKilo$(cat /tmp/backemerg-statKilo) kilo bytes"
+#echo " "
+
+echo "$pathNameFile"  | tee -a /tmp/outIluxdim &> /dev/null
+echo "$leggoPrefissoKilo$(cat /tmp/backemerg-statKilo) kilo bytes" | tee -a /tmp/outIluxdim &> /dev/null
+
+cat /tmp/outIluxdim | tail -n1 | cut -d. -f1,1 | sed 's/,/\\033\[32;40;5m\\033\[1m,\\033\[0m/g' > /tmp/outIluxdim-sx
+sx=$(cat /tmp/outIluxdim-sx)
+cat /tmp/outIluxdim | tail -n1 | cut -d. -f2,2 | sed 's/,/\\033\[31;40;5m\\033\[1m,\\033\[0m/g' > /tmp/outIluxdim-dx
+dx=$(cat /tmp/outIluxdim-dx)
+
+echo ""
 echo "$pathNameFile"
-echo "$leggoPrefissoGiga$(cat /tmp/backemerg-statKilo) kilo bytes"
-echo " "
-echo "$leggoPrefissoGiga$(cat /tmp/backemerg-statKilo) kilo bytes" | tee -a /tmp/outIluxdim &> /dev/null
+echo -e "$sx\033[33;40;5m\033[1m.\033[0m$dx"
+echo ""
+
 fi
 
 if test $leggoOptionLess == "b"
 
 then
 
-echo "$pathNameFile"
-echo "$(cat /tmp/backemerg-stat) bytes"
-echo " "
+#echo "$pathNameFile"
+#echo "$(cat /tmp/backemerg-stat) bytes"
+#echo " "
+echo "$pathNameFile"  | tee -a /tmp/outIluxdim &> /dev/null
 echo "$(cat /tmp/backemerg-stat) bytes" | tee -a /tmp/outIluxdim &> /dev/null
+
+cat /tmp/outIluxdim | tail -n1 | cut -d. -f1,1 | sed 's/,/\\033\[32;40;5m\\033\[1m,\\033\[0m/g' > /tmp/outIluxdim-sx
+sx=$(cat /tmp/outIluxdim-sx)
+cat /tmp/outIluxdim | tail -n1 | cut -d. -f2,2 | sed 's/,/\\033\[31;40;5m\\033\[1m,\\033\[0m/g' > /tmp/outIluxdim-dx
+dx=$(cat /tmp/outIluxdim-dx)
+
+echo ""
+echo "$pathNameFile"
+echo -e "$sx\033[33;40;5m\033[1m.\033[0m$dx"
+echo ""
+
 fi
+
 
 else
 
-	## default mode
-echo " "
-echo " "
-echo "$pathNameFile"
-echo " "
-echo "$(cat /tmp/backemerg-stat) bytes"
-echo " "
-leggoPrefissoMega="$(cat /tmp/iluxdimPrefissoKilo)"
-echo "$leggoPrefissoMega$(cat /tmp/backemerg-statKilo) kilo bytes"
+	### default mode
 
-echo " "
+#echo "$pathNameFile"
+#echo " "
+#echo "$(cat /tmp/backemerg-stat) bytes"
+
+leggoPrefissoKilo="$(cat /tmp/iluxdimPrefissoKilo)"
+
 leggoPrefissoMega="$(cat /tmp/iluxdimPrefissoMega)"
-echo "$leggoPrefissoMega$(cat /tmp/backemerg-statMega) mega bytes"
-echo " "
-leggoPrefissoGiga="$(cat /tmp/iluxdimPrefissoGiga)"
-echo "$leggoPrefissoGiga$(cat /tmp/backemerg-statGiga) giga bytes"
 
-echo " "
+leggoPrefissoGiga="$(cat /tmp/iluxdimPrefissoGiga)"
 
 echo "$pathNameFile
 $(cat /tmp/backemerg-stat) bytes
-$leggoPrefissoMega$(cat /tmp/backemerg-statKilo) kilo bytes
+$leggoPrefissoKilo$(cat /tmp/backemerg-statKilo) kilo bytes
 $leggoPrefissoMega$(cat /tmp/backemerg-statMega) mega bytes
 $leggoPrefissoGiga$(cat /tmp/backemerg-statGiga) giga bytes
 " | tee -a /tmp/outIluxdim &> /dev/null
+
+echo " "
+echo "$pathNameFile"
+echo "$(cat /tmp/backemerg-stat) bytes"
+echo ""
+
+echo "$leggoPrefissoKilo$(cat /tmp/backemerg-statKilo) kilo bytes" > /tmp/outIluxdimKilo
+cat /tmp/outIluxdimKilo | tail -n1 | cut -d. -f1,1 | sed 's/,/\\033\[32;40;5m\\033\[1m,\\033\[0m/g' > /tmp/outIluxdimKilo-sx
+sx=$(cat /tmp/outIluxdimKilo-sx)
+cat /tmp/outIluxdimKilo | tail -n1 | cut -d. -f2,2 | sed 's/,/\\033\[31;40;5m\\033\[1m,\\033\[0m/g' > /tmp/outIluxdimKilo-dx
+dx=$(cat /tmp/outIluxdimKilo-dx)
+echo -e "$sx\033[33;40;5m\033[1m.\033[0m$dx"
+echo ""
+
+echo "$leggoPrefissoMega$(cat /tmp/backemerg-statMega) mega bytes" > /tmp/outIluxdimMega
+cat /tmp/outIluxdimMega | tail -n1 | cut -d. -f1,1 | sed 's/,/\\033\[32;40;5m\\033\[1m,\\033\[0m/g' > /tmp/outIluxdimMega-sx
+sx=$(cat /tmp/outIluxdimMega-sx)
+cat /tmp/outIluxdimMega | tail -n1 | cut -d. -f2,2 | sed 's/,/\\033\[31;40;5m\\033\[1m,\\033\[0m/g' > /tmp/outIluxdimMega-dx
+dx=$(cat /tmp/outIluxdimMega-dx)
+echo -e "$sx\033[33;40;5m\033[1m.\033[0m$dx"
+echo ""
+
+echo "$leggoPrefissoGiga$(cat /tmp/backemerg-statGiga) giga bytes" > /tmp/outIluxdimGiga
+cat /tmp/outIluxdimGiga | tail -n1 | cut -d. -f1,1 | sed 's/,/\\033\[32;40;5m\\033\[1m,\\033\[0m/g' > /tmp/outIluxdimGiga-sx
+sx=$(cat /tmp/outIluxdimGiga-sx)
+cat /tmp/outIluxdimGiga | tail -n1 | cut -d. -f2,2 | sed 's/,/\\033\[31;40;5m\\033\[1m,\\033\[0m/g' > /tmp/outIluxdimGiga-dx
+dx=$(cat /tmp/outIluxdimGiga-dx)
+echo -e "$sx\033[33;40;5m\033[1m.\033[0m$dx"
+echo ""
+
+
 fi
 
 
@@ -1397,11 +1470,20 @@ if test $leggoOptionLess == "g"
 then
 
 	leggoPrefissoGiga="$(cat /tmp/iluxdimPrefissoGiga)"
-echo " "
-echo "$leggoPrefissoGiga$(cat /tmp/backemerg-statGiga) giga bytes"
-echo " "
+#echo " "
+#echo "$leggoPrefissoGiga$(cat /tmp/backemerg-statGiga) giga bytes"
+#echo " "
 
-echo "$leggoPrefissoGiga$(cat /tmp/backemerg-statGiga) giga bytes" | tee -a /tmp/outSommailuxdim &> /dev/null
+echo "$leggoPrefissoGiga$(cat /tmp/backemerg-statGiga) giga bytes" | tee -a /tmp/outSommaIluxdim &> /dev/null
+
+cat /tmp/outSommaIluxdim | tail -n1 | cut -d. -f1,1 | sed 's/,/\\033\[32;40;5m\\033\[1m,\\033\[0m/g' > /tmp/outSommaIluxdim-sx
+sx=$(cat /tmp/outSommaIluxdim-sx)
+cat /tmp/outSommaIluxdim | tail -n1 | cut -d. -f2,2 | sed 's/,/\\033\[31;40;5m\\033\[1m,\\033\[0m/g' > /tmp/outSommaIluxdim-dx
+dx=$(cat /tmp/outSommaIluxdim-dx)
+
+echo ""
+echo -e "$sx\033[33;40;5m\033[1m.\033[0m$dx"
+echo ""
 
 fi
 
@@ -1409,23 +1491,44 @@ if test $leggoOptionLess == "m"
 
 then
 
-	leggoPrefissoGiga="$(cat /tmp/iluxdimPrefissoMega)"
-echo " "
-echo "$leggoPrefissoGiga$(cat /tmp/backemerg-statMega) mega bytes"
-echo " "
-echo "$leggoPrefissoGiga$(cat /tmp/backemerg-statMega) mega bytes" | tee -a /tmp/outSommaIluxdim &> /dev/null
+leggoPrefissoMega="$(cat /tmp/iluxdimPrefissoMega)"
+#echo " "
+#echo "$leggoPrefissoMega$(cat /tmp/backemerg-statMega) mega bytes"
+#echo " "
+echo "$leggoPrefissoMega$(cat /tmp/backemerg-statMega) mega bytes" | tee -a /tmp/outSommaIluxdim &> /dev/null
+
+cat /tmp/outSommaIluxdim | tail -n1 | cut -d. -f1,1 | sed 's/,/\\033\[32;40;5m\\033\[1m,\\033\[0m/g' > /tmp/outSommaIluxdim-sx
+sx=$(cat /tmp/outSommailuxdim-sx)
+cat /tmp/outSommaIluxdim | tail -n1 | cut -d. -f2,2 | sed 's/,/\\033\[31;40;5m\\033\[1m,\\033\[0m/g' > /tmp/outSommaIluxdim-dx
+dx=$(cat /tmp/outSommaIluxdim-dx)
+
+echo ""
+echo -e "$sx\033[33;40;5m\033[1m.\033[0m$dx"
+echo ""
+
 fi
 
 if test $leggoOptionLess == "k"
 
 then
 
-	leggoPrefissoGiga="$(cat /tmp/iluxdimPrefissoKilo)"
+	leggoPrefissoKilo="$(cat /tmp/iluxdimPrefissoKilo)"
 
-echo " "
-echo "$leggoPrefissoGiga$(cat /tmp/backemerg-statKilo) kilo bytes"
-echo " "
-echo "$leggoPrefissoGiga$(cat /tmp/backemerg-statKilo) kilo bytes" | tee -a /tmp/outSommaIluxdim &> /dev/null
+#echo " "
+#echo "$leggoPrefissoKilo$(cat /tmp/backemerg-statKilo) kilo bytes"
+#echo " "
+echo "$leggoPrefissoKilo$(cat /tmp/backemerg-statKilo) kilo bytes" | tee -a /tmp/outSommaIluxdim &> /dev/null
+
+
+cat /tmp/outSommaIluxdim | tail -n1 | cut -d. -f1,1 | sed 's/,/\\033\[32;40;5m\\033\[1m,\\033\[0m/g' > /tmp/outSommaIluxdim-sx
+sx=$(cat /tmp/outSommailuxdim-sx)
+cat /tmp/outSommaIluxdim | tail -n1 | cut -d. -f2,2 | sed 's/,/\\033\[31;40;5m\\033\[1m,\\033\[0m/g' > /tmp/outSommaIluxdim-dx
+dx=$(cat /tmp/outSommaIluxdim-dx)
+
+echo ""
+echo -e "$sx\033[33;40;5m\033[1m.\033[0m$dx"
+echo ""
+
 fi
 
 if test $leggoOptionLess == "b"
@@ -1440,26 +1543,46 @@ fi
 else
 
 	## default mode
-echo " "
-echo "$(cat /tmp/backemerg-stat) bytes"
-echo " "
-leggoPrefissoMega="$(cat /tmp/iluxdimPrefissoKilo)"
-echo "$leggoPrefissoMega$(cat /tmp/backemerg-statKilo) kilo bytes"
 
-echo " "
+leggoPrefissoKilo="$(cat /tmp/iluxdimPrefissoKilo)"
+
 leggoPrefissoMega="$(cat /tmp/iluxdimPrefissoMega)"
-echo "$leggoPrefissoMega$(cat /tmp/backemerg-statMega) mega bytes"
-echo " "
-leggoPrefissoGiga="$(cat /tmp/iluxdimPrefissoGiga)"
-echo "$leggoPrefissoGiga$(cat /tmp/backemerg-statGiga) giga bytes"
 
-echo " "
+leggoPrefissoGiga="$(cat /tmp/iluxdimPrefissoGiga)"
 
 echo "$(cat /tmp/backemerg-stat) bytes
-$leggoPrefissoMega$(cat /tmp/backemerg-statKilo) kilo bytes
+$leggoPrefissoKilo$(cat /tmp/backemerg-statKilo) kilo bytes
 $leggoPrefissoMega$(cat /tmp/backemerg-statMega) mega bytes
 $leggoPrefissoGiga$(cat /tmp/backemerg-statGiga) giga bytes
 " | tee -a /tmp/outSommaIluxdim &> /dev/null
+
+echo " "
+echo "$(cat /tmp/backemerg-stat) bytes"
+echo ""
+
+echo "$leggoPrefissoKilo$(cat /tmp/backemerg-statKilo) kilo bytes" > /tmp/outSommaIluxdimKilo
+cat /tmp/outSommaIluxdimKilo | tail -n1 | cut -d. -f1,1 | sed 's/,/\\033\[32;40;5m\\033\[1m,\\033\[0m/g' > /tmp/outSommaIluxdimKilo-sx
+sx=$(cat /tmp/outSommaIluxdimKilo-sx)
+cat /tmp/outSommaIluxdimKilo | tail -n1 | cut -d. -f2,2 | sed 's/,/\\033\[31;40;5m\\033\[1m,\\033\[0m/g' > /tmp/outSommaIluxdimKilo-dx
+dx=$(cat /tmp/outSommaIluxdimKilo-dx)
+echo -e "$sx\033[33;40;5m\033[1m.\033[0m$dx"
+echo ""
+
+echo "$leggoPrefissoMega$(cat /tmp/backemerg-statMega) mega bytes" > /tmp/outSommaIluxdimMega
+cat /tmp/outSommaIluxdimMega | tail -n1 | cut -d. -f1,1 | sed 's/,/\\033\[32;40;5m\\033\[1m,\\033\[0m/g' > /tmp/outSommaIluxdimMega-sx
+sx=$(cat /tmp/outSommaIluxdimMega-sx)
+cat /tmp/outSommaIluxdimMega | tail -n1 | cut -d. -f2,2 | sed 's/,/\\033\[31;40;5m\\033\[1m,\\033\[0m/g' > /tmp/outSommaIluxdimMega-dx
+dx=$(cat /tmp/outSommaIluxdimMega-dx)
+echo -e "$sx\033[33;40;5m\033[1m.\033[0m$dx"
+echo ""
+
+echo "$leggoPrefissoGiga$(cat /tmp/backemerg-statGiga) giga bytes" > /tmp/outSommaIluxdimGiga
+cat /tmp/outSommaIluxdimGiga | tail -n1 | cut -d. -f1,1 | sed 's/,/\\033\[32;40;5m\\033\[1m,\\033\[0m/g' > /tmp/outSommaIluxdimGiga-sx
+sx=$(cat /tmp/outSommaIluxdimGiga-sx)
+cat /tmp/outSommaIluxdimGiga | tail -n1 | cut -d. -f2,2 | sed 's/,/\\033\[31;40;5m\\033\[1m,\\033\[0m/g' > /tmp/outSommaIluxdimGiga-dx
+dx=$(cat /tmp/outSommaIluxdimGiga-dx)
+echo -e "$sx\033[33;40;5m\033[1m.\033[0m$dx"
+echo ""
 
 fi
 

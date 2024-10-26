@@ -140,7 +140,6 @@ Output is written on stdout and in:
 
 
 https://github.com/MartDiVenus/AleSNFS/notazioneDimensioni
-https://youtu.be/wXrcPyFcFG0
 
 Copyright:
 Copyright (C) 2023.08.29 Mario Fantini (marfant7@gmail.com).
@@ -1354,21 +1353,29 @@ then
 
 leggoOptionLess="$(cat /tmp/valedimOptionLess)"
 
+
 if test $leggoOptionLess == "g"
 
 then
 
 	leggoPrefissoGiga="$(cat /tmp/valedimPrefissoGiga)"
-echo " "
-echo "$pathNameFile"
-echo "$leggoPrefissoGiga$(cat /tmp/backemerg-statGiga) giga bytes"
-echo " "
-
+#echo " "
+#echo "$pathNameFile"
+#echo "$leggoPrefissoGiga$(cat /tmp/backemerg-statGiga) giga bytes"
+#echo " "
 echo "$pathNameFile"  | tee -a /tmp/outValedim &> /dev/null
-echo "$pathNameFile"  | tee -a /tmp/ValeNetrw-BmOutput &> /dev/null
-
 echo "$leggoPrefissoGiga$(cat /tmp/backemerg-statGiga) giga bytes" | tee -a /tmp/outValedim &> /dev/null
 echo "$leggoPrefissoGiga$(cat /tmp/backemerg-statGiga) giga bytes" | tee -a /tmp/ValeNetrw-BmOutput &> /dev/null
+
+cat /tmp/outValedim | tail -n1 | cut -d. -f1,1 | sed 's/,/\\033\[32;40;5m\\033\[1m,\\033\[0m/g' > /tmp/outValedim-sx
+sx=$(cat /tmp/outValedim-sx)
+cat /tmp/outValedim | tail -n1 | cut -d. -f2,2 | sed 's/,/\\033\[31;40;5m\\033\[1m,\\033\[0m/g' > /tmp/outValedim-dx
+dx=$(cat /tmp/outValedim-dx)
+
+echo ""
+echo "$pathNameFile"
+echo -e "$sx\033[33;40;5m\033[1m.\033[0m$dx"
+echo ""
 
 fi
 
@@ -1376,90 +1383,136 @@ if test $leggoOptionLess == "m"
 
 then
 
-	leggoPrefissoGiga="$(cat /tmp/valedimPrefissoMega)"
-echo " "
-echo "$pathNameFile"
-echo "$leggoPrefissoGiga$(cat /tmp/backemerg-statMega) mega bytes"
-echo " "
-
+	leggoPrefissoMega="$(cat /tmp/valedimPrefissoMega)"
+#echo " "
+#echo "$pathNameFile"
+#echo "$leggoPrefissoMega$(cat /tmp/backemerg-statMega) mega bytes"
+#echo " "
 echo "$pathNameFile"  | tee -a /tmp/outValedim &> /dev/null
-echo "$pathNameFile"  | tee -a /tmp/ValeNetrw-BmOutput &> /dev/null
+echo "$leggoPrefissoMega$(cat /tmp/backemerg-statMega) mega bytes" | tee -a /tmp/outValedim &> /dev/null
+echo "$leggoPrefissoMega$(cat /tmp/backemerg-statMega) mega bytes" | tee -a /tmp/ValeNetrw-BmOutput &> /dev/null
 
+cat /tmp/outValedim | tail -n1 | cut -d. -f1,1 | sed 's/,/\\033\[32;40;5m\\033\[1m,\\033\[0m/g' > /tmp/outValedim-sx
+sx=$(cat /tmp/outValedim-sx)
+cat /tmp/outValedim | tail -n1 | cut -d. -f2,2 | sed 's/,/\\033\[31;40;5m\\033\[1m,\\033\[0m/g' > /tmp/outValedim-dx
+dx=$(cat /tmp/outValedim-dx)
 
-echo "$leggoPrefissoGiga$(cat /tmp/backemerg-statMega) mega bytes" | tee -a /tmp/outValedim &> /dev/null
-echo "$leggoPrefissoGiga$(cat /tmp/backemerg-statMega) mega bytes" | tee -a /tmp/ValeNetrw-BmOutput &> /dev/null
+echo ""
+echo "$pathNameFile"
+echo -e "$sx\033[33;40;5m\033[1m.\033[0m$dx"
+echo ""
+
 fi
 
 if test $leggoOptionLess == "k"
 
 then
 
-	leggoPrefissoGiga="$(cat /tmp/valedimPrefissoKilo)"
+	leggoPrefissoKilo="$(cat /tmp/valedimPrefissoKilo)"
 
-echo " "
-echo "$pathNameFile"
-echo "$leggoPrefissoGiga$(cat /tmp/backemerg-statKilo) kilo bytes"
-echo " "
+#echo " "
+#echo "$pathNameFile"
+#echo "$leggoPrefissoKilo$(cat /tmp/backemerg-statKilo) kilo bytes"
+#echo " "
 
 echo "$pathNameFile"  | tee -a /tmp/outValedim &> /dev/null
-echo "$pathNameFile"  | tee -a /tmp/ValeNetrw-BmOutput &> /dev/null
+echo "$leggoPrefissoKilo$(cat /tmp/backemerg-statKilo) kilo bytes" | tee -a /tmp/outValedim &> /dev/null
+echo "$leggoPrefissoKilo$(cat /tmp/backemerg-statKilo) kilo bytes" | tee -a /tmp/ValeNetrw-BmOutput &> /dev/null
 
-echo "$leggoPrefissoGiga$(cat /tmp/backemerg-statKilo) kilo bytes" | tee -a /tmp/outValedim &> /dev/null
-echo "$leggoPrefissoGiga$(cat /tmp/backemerg-statKilo) kilo bytes" | tee -a /tmp/ValeNetrw-BmOutput &> /dev/null
+cat /tmp/outValedim | tail -n1 | cut -d. -f1,1 | sed 's/,/\\033\[32;40;5m\\033\[1m,\\033\[0m/g' > /tmp/outValedim-sx
+sx=$(cat /tmp/outValedim-sx)
+cat /tmp/outValedim | tail -n1 | cut -d. -f2,2 | sed 's/,/\\033\[31;40;5m\\033\[1m,\\033\[0m/g' > /tmp/outValedim-dx
+dx=$(cat /tmp/outValedim-dx)
+
+echo ""
+echo "$pathNameFile"
+echo -e "$sx\033[33;40;5m\033[1m.\033[0m$dx"
+echo ""
+
 fi
 
 if test $leggoOptionLess == "b"
 
 then
 
-echo "$pathNameFile"
-echo "$(cat /tmp/backemerg-stat) bytes"
-echo " "
-
+#echo "$pathNameFile"
+#echo "$(cat /tmp/backemerg-stat) bytes"
+#echo " "
 echo "$pathNameFile"  | tee -a /tmp/outValedim &> /dev/null
-echo "$pathNameFile"  | tee -a /tmp/ValeNetrw-BmOutput &> /dev/null
-
 echo "$(cat /tmp/backemerg-stat) bytes" | tee -a /tmp/outValedim &> /dev/null
 echo "$(cat /tmp/backemerg-stat) bytes" | tee -a /tmp/ValeNetrw-BmOutput &> /dev/null
+
+cat /tmp/outValedim | tail -n1 | cut -d. -f1,1 | sed 's/,/\\033\[32;40;5m\\033\[1m,\\033\[0m/g' > /tmp/outValedim-sx
+sx=$(cat /tmp/outValedim-sx)
+cat /tmp/outValedim | tail -n1 | cut -d. -f2,2 | sed 's/,/\\033\[31;40;5m\\033\[1m,\\033\[0m/g' > /tmp/outValedim-dx
+dx=$(cat /tmp/outValedim-dx)
+
+echo ""
+echo "$pathNameFile"
+echo -e "$sx\033[33;40;5m\033[1m.\033[0m$dx"
+echo ""
+
 fi
 
 else
 
 	## default mode
-echo " "
-echo " "
-echo "$pathNameFile"
-echo " "
-echo "$(cat /tmp/backemerg-stat) bytes"
-echo " "
-leggoPrefissoMega="$(cat /tmp/valedimPrefissoKilo)"
-echo "$leggoPrefissoMega$(cat /tmp/backemerg-statKilo) kilo bytes"
+#echo "$pathNameFile"
+#echo " "
+#echo "$(cat /tmp/backemerg-stat) bytes"
 
-echo " "
+leggoPrefissoKilo="$(cat /tmp/valedimPrefissoKilo)"
+
 leggoPrefissoMega="$(cat /tmp/valedimPrefissoMega)"
-echo "$leggoPrefissoMega$(cat /tmp/backemerg-statMega) mega bytes"
-echo " "
-leggoPrefissoGiga="$(cat /tmp/valedimPrefissoGiga)"
-echo "$leggoPrefissoGiga$(cat /tmp/backemerg-statGiga) giga bytes"
 
-echo " "
+leggoPrefissoGiga="$(cat /tmp/valedimPrefissoGiga)"
 
 echo "$pathNameFile
 $(cat /tmp/backemerg-stat) bytes
-$leggoPrefissoMega$(cat /tmp/backemerg-statKilo) kilo bytes
+$leggoPrefissoKilo$(cat /tmp/backemerg-statKilo) kilo bytes
 $leggoPrefissoMega$(cat /tmp/backemerg-statMega) mega bytes
 $leggoPrefissoGiga$(cat /tmp/backemerg-statGiga) giga bytes
 " | tee -a /tmp/outValedim &> /dev/null
 
 echo "$pathNameFile
 $(cat /tmp/backemerg-stat) bytes
-$leggoPrefissoMega$(cat /tmp/backemerg-statKilo) kilo bytes
+$leggoPrefissoKilo$(cat /tmp/backemerg-statKilo) kilo bytes
 $leggoPrefissoMega$(cat /tmp/backemerg-statMega) mega bytes
 $leggoPrefissoGiga$(cat /tmp/backemerg-statGiga) giga bytes
 " | tee -a /tmp/ValeNetrw-BmOutput &> /dev/null
 
-fi
 
+echo " "
+echo " "
+echo "$pathNameFile"
+echo "$(cat /tmp/backemerg-stat) bytes"
+echo ""
+
+echo "$leggoPrefissoKilo$(cat /tmp/backemerg-statKilo) kilo bytes" > /tmp/outValedimKilo
+cat /tmp/outValedimKilo | tail -n1 | cut -d. -f1,1 | sed 's/,/\\033\[32;40;5m\\033\[1m,\\033\[0m/g' > /tmp/outValedimKilo-sx
+sx=$(cat /tmp/outValedimKilo-sx)
+cat /tmp/outValedimKilo | tail -n1 | cut -d. -f2,2 | sed 's/,/\\033\[31;40;5m\\033\[1m,\\033\[0m/g' > /tmp/outValedimKilo-dx
+dx=$(cat /tmp/outValedimKilo-dx)
+echo -e "$sx\033[33;40;5m\033[1m.\033[0m$dx"
+echo ""
+
+echo "$leggoPrefissoMega$(cat /tmp/backemerg-statMega) mega bytes" > /tmp/outValedimMega
+cat /tmp/outValedimMega | tail -n1 | cut -d. -f1,1 | sed 's/,/\\033\[32;40;5m\\033\[1m,\\033\[0m/g' > /tmp/outValedimMega-sx
+sx=$(cat /tmp/outValedimMega-sx)
+cat /tmp/outValedimMega | tail -n1 | cut -d. -f2,2 | sed 's/,/\\033\[31;40;5m\\033\[1m,\\033\[0m/g' > /tmp/outValedimMega-dx
+dx=$(cat /tmp/outValedimMega-dx)
+echo -e "$sx\033[33;40;5m\033[1m.\033[0m$dx"
+echo ""
+
+echo "$leggoPrefissoGiga$(cat /tmp/backemerg-statGiga) giga bytes" > /tmp/outValedimGiga
+cat /tmp/outValedimGiga | tail -n1 | cut -d. -f1,1 | sed 's/,/\\033\[32;40;5m\\033\[1m,\\033\[0m/g' > /tmp/outValedimGiga-sx
+sx=$(cat /tmp/outValedimGiga-sx)
+cat /tmp/outValedimGiga | tail -n1 | cut -d. -f2,2 | sed 's/,/\\033\[31;40;5m\\033\[1m,\\033\[0m/g' > /tmp/outValedimGiga-dx
+dx=$(cat /tmp/outValedimGiga-dx)
+echo -e "$sx\033[33;40;5m\033[1m.\033[0m$dx"
+echo ""
+
+fi
 
 done
 
@@ -1542,12 +1595,23 @@ if test $leggoOptionLess == "g"
 then
 
 	leggoPrefissoGiga="$(cat /tmp/valedimPrefissoGiga)"
-echo " "
-echo "$leggoPrefissoGiga$(cat /tmp/backemerg-statGiga) giga bytes"
-echo " "
+#echo " "
+#echo "$leggoPrefissoGiga$(cat /tmp/backemerg-statGiga) giga bytes"
+#echo " "
 
 echo "$leggoPrefissoGiga$(cat /tmp/backemerg-statGiga) giga bytes" | tee -a /tmp/outSommaValedim &> /dev/null
+
 echo "$leggoPrefissoGiga$(cat /tmp/backemerg-statGiga) giga bytes" | tee -a /tmp/ValeNetrw-BmSommaOutput &> /dev/null
+
+cat /tmp/outSommaValedim | tail -n1 | cut -d. -f1,1 | sed 's/,/\\033\[32;40;5m\\033\[1m,\\033\[0m/g' > /tmp/outSommaValedim-sx
+sx=$(cat /tmp/outSommaValedim-sx)
+cat /tmp/outSommaValedim | tail -n1 | cut -d. -f2,2 | sed 's/,/\\033\[31;40;5m\\033\[1m,\\033\[0m/g' > /tmp/outSommaValedim-dx
+dx=$(cat /tmp/outSommaValedim-dx)
+
+echo ""
+echo "$pathNameFile"
+echo -e "$sx\033[33;40;5m\033[1m.\033[0m$dx"
+echo ""
 
 fi
 
@@ -1555,27 +1619,45 @@ if test $leggoOptionLess == "m"
 
 then
 
-	leggoPrefissoGiga="$(cat /tmp/valedimPrefissoMega)"
-echo " "
-echo "$leggoPrefissoGiga$(cat /tmp/backemerg-statMega) mega bytes"
-echo " "
+leggoPrefissoMega="$(cat /tmp/valedimPrefissoMega)"
+#echo " "
+#echo "$leggoPrefissoMega$(cat /tmp/backemerg-statMega) mega bytes"
+#echo " "
+echo "$leggoPrefissoMega$(cat /tmp/backemerg-statMega) mega bytes" | tee -a /tmp/outSommaValedim &> /dev/null
+echo "$leggoPrefissoMega$(cat /tmp/backemerg-statMega) mega bytes" | tee -a /tmp/ValeNetrw-BmSommaOutput &> /dev/null
 
-echo "$leggoPrefissoGiga$(cat /tmp/backemerg-statMega) mega bytes" | tee -a /tmp/outSommaValedim &> /dev/null
-echo "$leggoPrefissoGiga$(cat /tmp/backemerg-statMega) mega bytes" | tee -a /tmp/ValeNetrw-BmSommaOutput &> /dev/null
+cat /tmp/outSommaValedim | tail -n1 | cut -d. -f1,1 | sed 's/,/\\033\[32;40;5m\\033\[1m,\\033\[0m/g' > /tmp/outSommaValedim-sx
+sx=$(cat /tmp/outSommavaledim-sx)
+cat /tmp/outSommaValedim | tail -n1 | cut -d. -f2,2 | sed 's/,/\\033\[31;40;5m\\033\[1m,\\033\[0m/g' > /tmp/outSommaValedim-dx
+dx=$(cat /tmp/outSommaValedim-dx)
+
+echo ""
+echo -e "$sx\033[33;40;5m\033[1m.\033[0m$dx"
+echo ""
+
 fi
 
 if test $leggoOptionLess == "k"
 
 then
 
-	leggoPrefissoGiga="$(cat /tmp/valedimPrefissoKilo)"
+	leggoPrefissoKilo="$(cat /tmp/valedimPrefissoKilo)"
 
-echo " "
-echo "$leggoPrefissoGiga$(cat /tmp/backemerg-statKilo) kilo bytes"
-echo " "
+#echo " "
+#echo "$leggoPrefissoKilo$(cat /tmp/backemerg-statKilo) kilo bytes"
+#echo " "
+echo "$leggoPrefissoKilo$(cat /tmp/backemerg-statKilo) kilo bytes" | tee -a /tmp/outSommaValedim &> /dev/null
+echo "$leggoPrefissoKilo$(cat /tmp/backemerg-statKilo) kilo bytes" | tee -a /tmp/ValeNetrw-BmSommaOutput &> /dev/null
 
-echo "$leggoPrefissoGiga$(cat /tmp/backemerg-statKilo) kilo bytes" | tee -a /tmp/outSommaValedim &> /dev/null
-echo "$leggoPrefissoGiga$(cat /tmp/backemerg-statKilo) kilo bytes" | tee -a /tmp/ValeNetrw-BmSommaOutput &> /dev/null
+cat /tmp/outSommaValedim | tail -n1 | cut -d. -f1,1 | sed 's/,/\\033\[32;40;5m\\033\[1m,\\033\[0m/g' > /tmp/outSommaValedim-sx
+sx=$(cat /tmp/outSommavaledim-sx)
+cat /tmp/outSommaValedim | tail -n1 | cut -d. -f2,2 | sed 's/,/\\033\[31;40;5m\\033\[1m,\\033\[0m/g' > /tmp/outSommaValedim-dx
+dx=$(cat /tmp/outSommaValedim-dx)
+
+echo ""
+echo -e "$sx\033[33;40;5m\033[1m.\033[0m$dx"
+echo ""
+
 fi
 
 if test $leggoOptionLess == "b"
@@ -1584,7 +1666,6 @@ then
 
 echo "$(cat /tmp/backemerg-stat) bytes"
 echo " "
-
 echo "$(cat /tmp/backemerg-stat) bytes" | tee -a /tmp/outSommaValedim &> /dev/null
 echo "$(cat /tmp/backemerg-stat) bytes" | tee -a /tmp/ValeNetrw-BmSommaOutput &> /dev/null
 fi
@@ -1592,32 +1673,54 @@ fi
 else
 
 	## default mode
-echo " "
-echo "$(cat /tmp/backemerg-stat) bytes"
-echo " "
-leggoPrefissoMega="$(cat /tmp/valedimPrefissoKilo)"
-echo "$leggoPrefissoMega$(cat /tmp/backemerg-statKilo) kilo bytes"
 
-echo " "
+leggoPrefissoKilo="$(cat /tmp/valedimPrefissoKilo)"
+
 leggoPrefissoMega="$(cat /tmp/valedimPrefissoMega)"
-echo "$leggoPrefissoMega$(cat /tmp/backemerg-statMega) mega bytes"
-echo " "
+
 leggoPrefissoGiga="$(cat /tmp/valedimPrefissoGiga)"
-echo "$leggoPrefissoGiga$(cat /tmp/backemerg-statGiga) giga bytes"
 
-echo " "
-
-echo "$(cat /tmp/backemerg-stat) bytes
-$leggoPrefissoMega$(cat /tmp/backemerg-statKilo) kilo bytes
+echo "Somma Totale
+$(cat /tmp/backemerg-stat) bytes
+$leggoPrefissoKilo$(cat /tmp/backemerg-statKilo) kilo bytes
 $leggoPrefissoMega$(cat /tmp/backemerg-statMega) mega bytes
 $leggoPrefissoGiga$(cat /tmp/backemerg-statGiga) giga bytes
 " | tee -a /tmp/outSommaValedim &> /dev/null
 
-echo "$(cat /tmp/backemerg-stat) bytes
-$leggoPrefissoMega$(cat /tmp/backemerg-statKilo) kilo bytes
+echo "Somma Totale
+$(cat /tmp/backemerg-stat) bytes
+$leggoPrefissoKilo$(cat /tmp/backemerg-statKilo) kilo bytes
 $leggoPrefissoMega$(cat /tmp/backemerg-statMega) mega bytes
 $leggoPrefissoGiga$(cat /tmp/backemerg-statGiga) giga bytes
 " | tee -a /tmp/ValeNetrw-BmSommaOutput &> /dev/null
+
+
+echo "$(cat /tmp/backemerg-stat) bytes"
+echo ""
+
+echo "$leggoPrefissoKilo$(cat /tmp/backemerg-statKilo) kilo bytes" > /tmp/outSommaValedimKilo
+cat /tmp/outSommaValedimKilo | tail -n1 | cut -d. -f1,1 | sed 's/,/\\033\[32;40;5m\\033\[1m,\\033\[0m/g' > /tmp/outSommaValedimKilo-sx
+sx=$(cat /tmp/outSommaValedimKilo-sx)
+cat /tmp/outSommaValedimKilo | tail -n1 | cut -d. -f2,2 | sed 's/,/\\033\[31;40;5m\\033\[1m,\\033\[0m/g' > /tmp/outSommaValedimKilo-dx
+dx=$(cat /tmp/outSommaValedimKilo-dx)
+echo -e "$sx\033[33;40;5m\033[1m.\033[0m$dx"
+echo ""
+
+echo "$leggoPrefissoMega$(cat /tmp/backemerg-statMega) mega bytes" > /tmp/outSommaValedimMega
+cat /tmp/outSommaValedimMega | tail -n1 | cut -d. -f1,1 | sed 's/,/\\033\[32;40;5m\\033\[1m,\\033\[0m/g' > /tmp/outSommaValedimMega-sx
+sx=$(cat /tmp/outSommaValedimMega-sx)
+cat /tmp/outSommaValedimMega | tail -n1 | cut -d. -f2,2 | sed 's/,/\\033\[31;40;5m\\033\[1m,\\033\[0m/g' > /tmp/outSommaValedimMega-dx
+dx=$(cat /tmp/outSommaValedimMega-dx)
+echo -e "$sx\033[33;40;5m\033[1m.\033[0m$dx"
+echo ""
+
+echo "$leggoPrefissoGiga$(cat /tmp/backemerg-statGiga) giga bytes" > /tmp/outSommaValedimGiga
+cat /tmp/outSommaValedimGiga | tail -n1 | cut -d. -f1,1 | sed 's/,/\\033\[32;40;5m\\033\[1m,\\033\[0m/g' > /tmp/outSommaValedimGiga-sx
+sx=$(cat /tmp/outSommaValedimGiga-sx)
+cat /tmp/outSommaValedimGiga | tail -n1 | cut -d. -f2,2 | sed 's/,/\\033\[31;40;5m\\033\[1m,\\033\[0m/g' > /tmp/outSommaValedimGiga-dx
+dx=$(cat /tmp/outSommaValedimGiga-dx)
+echo -e "$sx\033[33;40;5m\033[1m.\033[0m$dx"
+echo ""
 
 fi
 

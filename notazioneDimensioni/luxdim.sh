@@ -11,12 +11,18 @@
 ## virgola ogni migliaia di bytes, quindi ogni tre cifre.
 
 rm -fr /tmp/backemerg*
+
 rm -fr /tmp/luxdim*
+
+rm -fr /tmp/Iluxdim*
+
 rm -f /tmp/inputLux*
 
 leggo1=$(echo $1 > /tmp/inputLuxDim01)
 
 leggo2=$(echo $2 > /tmp/inputLuxDim02)
+
+leggo3=$(echo $3 > /tmp/inputLuxDim03)
 
 rm -f /tmp/outluxdim
 
@@ -52,7 +58,7 @@ then
 echo "
 Name: Luxdim"
 echo "
-Goal: To  print  size  of  a  file, in  diverse  units. "
+Goal: To  print  size  of  files [in  diverse  units], to calculate sum of them. "
 echo " "
 		echo "Version: backemerg-4.2.0"
 		echo " "
@@ -63,11 +69,14 @@ echo "bytes				 				-b"
 echo "kilo bytes				 			-k"
 echo "mega bytes 	  	 	 				-m"
 echo "giga bytes				 			-g"
+echo ""
 echo "target file	 						--f=<Value>"
+echo ""
 echo "input file	 						--i=<Value>"
-echo "Sum of file sizes						--i=<Value>"
-
-echo " "
+echo "Sum of file sizes	listed in the input file			--i=<Value>"
+echo ""
+echo "Sum of file sizes	selected by asterisk				-s"
+echo ""
 echo "Usage:
 luxdim -option --f=<Value>"
 echo " "
@@ -118,7 +127,7 @@ luxdim -g --f=/home/user/c.iso
 ...
 
 
-input file (e.g. 'list.txt') must have written one file for line;
+input file (e.g. 'list.txt') must be written one file for line;
 e.g.
 cat list.txt
 a.txt
@@ -136,9 +145,27 @@ Output is written on stdout and in:
 
 
 
+Sum of files selected by asterisk
+
+luxdim -s --f=*
+
+luxdim -s --f=a*
+
+luxdim -s --f=/home/usr/*
+
+luxdim -s --f=/home/usr/*.java
+
+Output is written on stdout and in:
+/tmp/outluxdim			(single file)
+
+/tmp/outIluxdim			(more files / addends of sum)
+
+/tmp/outSommaIluxdim		(sum)
+
+
+
 
 https://github.com/MartDiVenus/AleSNFS/notazioneDimensioni
-https://youtu.be/wXrcPyFcFG0
 
 Copyright:
 Copyright (C) 2023.10.03 Mario Fantini (marfant7@gmail.com).
@@ -1328,6 +1355,8 @@ cp /tmp/inputLuxDim01  /tmp/luxdim
 
 cp /tmp/inputLuxDim02 /tmp/luxdim
 
+cp /tmp/inputLuxDim03 /tmp/luxdim
+
 for a in $(ls /tmp/luxdim)
 
 do
@@ -1474,12 +1503,22 @@ if test $leggoOptionLess == "g"
 then
 
 	leggoPrefissoGiga="$(cat /tmp/luxdimPrefissoGiga)"
-echo " "
-echo "$pathNameFile"
-echo "$leggoPrefissoGiga$(cat /tmp/backemerg-statGiga) giga bytes"
-echo " "
+#echo " "
+#echo "$pathNameFile"
+#echo "$leggoPrefissoGiga$(cat /tmp/backemerg-statGiga) giga bytes"
+#echo " "
 echo "$pathNameFile"  | tee -a /tmp/outluxdim &> /dev/null
 echo "$leggoPrefissoGiga$(cat /tmp/backemerg-statGiga) giga bytes" | tee -a /tmp/outluxdim &> /dev/null
+
+cat /tmp/outluxdim | tail -n1 | cut -d. -f1,1 | sed 's/,/\\033\[32;40;5m\\033\[1m,\\033\[0m/g' > /tmp/outluxdim-sx
+sx=$(cat /tmp/outluxdim-sx)
+cat /tmp/outluxdim | tail -n1 | cut -d. -f2,2 | sed 's/,/\\033\[31;40;5m\\033\[1m,\\033\[0m/g' > /tmp/outluxdim-dx
+dx=$(cat /tmp/outluxdim-dx)
+
+echo ""
+echo "$pathNameFile"
+echo -e "$sx\033[33;40;5m\033[1m.\033[0m$dx"
+echo ""
 
 fi
 
@@ -1487,13 +1526,23 @@ if test $leggoOptionLess == "m"
 
 then
 
-	leggoPrefissoGiga="$(cat /tmp/luxdimPrefissoMega)"
-echo " "
-echo "$pathNameFile"
-echo "$leggoPrefissoGiga$(cat /tmp/backemerg-statMega) mega bytes"
-echo " "
+	leggoPrefissoMega="$(cat /tmp/luxdimPrefissoMega)"
+#echo " "
+#echo "$pathNameFile"
+#echo "$leggoPrefissoMega$(cat /tmp/backemerg-statMega) mega bytes"
+#echo " "
 echo "$pathNameFile"  | tee -a /tmp/outluxdim &> /dev/null
-echo "$leggoPrefissoGiga$(cat /tmp/backemerg-statMega) mega bytes" | tee -a /tmp/outluxdim &> /dev/null
+echo "$leggoPrefissoMega$(cat /tmp/backemerg-statMega) mega bytes" | tee -a /tmp/outluxdim &> /dev/null
+
+cat /tmp/outluxdim | tail -n1 | cut -d. -f1,1 | sed 's/,/\\033\[32;40;5m\\033\[1m,\\033\[0m/g' > /tmp/outluxdim-sx
+sx=$(cat /tmp/outluxdim-sx)
+cat /tmp/outluxdim | tail -n1 | cut -d. -f2,2 | sed 's/,/\\033\[31;40;5m\\033\[1m,\\033\[0m/g' > /tmp/outluxdim-dx
+dx=$(cat /tmp/outluxdim-dx)
+
+echo ""
+echo "$pathNameFile"
+echo -e "$sx\033[33;40;5m\033[1m.\033[0m$dx"
+echo ""
 
 fi
 
@@ -1501,62 +1550,121 @@ if test $leggoOptionLess == "k"
 
 then
 
-	leggoPrefissoGiga="$(cat /tmp/luxdimPrefissoKilo)"
+	leggoPrefissoKilo="$(cat /tmp/luxdimPrefissoKilo)"
 
-echo " "
-echo "$pathNameFile"
-echo "$leggoPrefissoGiga$(cat /tmp/backemerg-statKilo) kilo bytes"
-echo " "
+#echo " "
+#echo "$pathNameFile"
+#echo "$leggoPrefissoKilo$(cat /tmp/backemerg-statKilo) kilo bytes"
+#echo " "
 
 echo "$pathNameFile"  | tee -a /tmp/outluxdim &> /dev/null
-echo "$leggoPrefissoGiga$(cat /tmp/backemerg-statKilo) kilo bytes" | tee -a /tmp/outluxdim &> /dev/null
+echo "$leggoPrefissoKilo$(cat /tmp/backemerg-statKilo) kilo bytes" | tee -a /tmp/outluxdim &> /dev/null
+
+cat /tmp/outluxdim | tail -n1 | cut -d. -f1,1 | sed 's/,/\\033\[32;40;5m\\033\[1m,\\033\[0m/g' > /tmp/outluxdim-sx
+sx=$(cat /tmp/outluxdim-sx)
+cat /tmp/outluxdim | tail -n1 | cut -d. -f2,2 | sed 's/,/\\033\[31;40;5m\\033\[1m,\\033\[0m/g' > /tmp/outluxdim-dx
+dx=$(cat /tmp/outluxdim-dx)
+
+echo ""
+echo "$pathNameFile"
+echo -e "$sx\033[33;40;5m\033[1m.\033[0m$dx"
+echo ""
+
 fi
 
 if test $leggoOptionLess == "b"
 
 then
 
-echo "$pathNameFile"
-echo "$(cat /tmp/backemerg-stat) bytes"
-echo " "
+#echo "$pathNameFile"
+#echo "$(cat /tmp/backemerg-stat) bytes"
+#echo " "
 echo "$pathNameFile"  | tee -a /tmp/outluxdim &> /dev/null
 echo "$(cat /tmp/backemerg-stat) bytes" | tee -a /tmp/outluxdim &> /dev/null
+
+cat /tmp/outluxdim | tail -n1 | cut -d. -f1,1 | sed 's/,/\\033\[32;40;5m\\033\[1m,\\033\[0m/g' > /tmp/outluxdim-sx
+sx=$(cat /tmp/outluxdim-sx)
+cat /tmp/outluxdim | tail -n1 | cut -d. -f2,2 | sed 's/,/\\033\[31;40;5m\\033\[1m,\\033\[0m/g' > /tmp/outluxdim-dx
+dx=$(cat /tmp/outluxdim-dx)
+
+echo ""
+echo "$pathNameFile"
+echo -e "$sx\033[33;40;5m\033[1m.\033[0m$dx"
+echo ""
+
 fi
 
 else
 
 	## default mode
-echo " "
-echo " "
-echo "$pathNameFile"
-echo " "
-echo "$(cat /tmp/backemerg-stat) bytes"
-echo " "
-leggoPrefissoMega="$(cat /tmp/luxdimPrefissoKilo)"
-echo "$leggoPrefissoMega$(cat /tmp/backemerg-statKilo) kilo bytes"
+#echo "$pathNameFile"
+#echo " "
+#echo "$(cat /tmp/backemerg-stat) bytes"
 
-echo " "
+leggoPrefissoKilo="$(cat /tmp/luxdimPrefissoKilo)"
+
 leggoPrefissoMega="$(cat /tmp/luxdimPrefissoMega)"
-echo "$leggoPrefissoMega$(cat /tmp/backemerg-statMega) mega bytes"
-echo " "
-leggoPrefissoGiga="$(cat /tmp/luxdimPrefissoGiga)"
-echo "$leggoPrefissoGiga$(cat /tmp/backemerg-statGiga) giga bytes"
 
-echo " "
+leggoPrefissoGiga="$(cat /tmp/luxdimPrefissoGiga)"
 
 echo "$pathNameFile
 $(cat /tmp/backemerg-stat) bytes
-$leggoPrefissoMega$(cat /tmp/backemerg-statKilo) kilo bytes
+$leggoPrefissoKilo$(cat /tmp/backemerg-statKilo) kilo bytes
 $leggoPrefissoMega$(cat /tmp/backemerg-statMega) mega bytes
 $leggoPrefissoGiga$(cat /tmp/backemerg-statGiga) giga bytes
 " | tee -a /tmp/outluxdim &> /dev/null
 
+echo " "
+echo " "
+echo "$pathNameFile"
+echo "$(cat /tmp/backemerg-stat) bytes"
+echo ""
+
+echo "$leggoPrefissoKilo$(cat /tmp/backemerg-statKilo) kilo bytes" > /tmp/outluxdimKilo
+cat /tmp/outluxdimKilo | tail -n1 | cut -d. -f1,1 | sed 's/,/\\033\[32;40;5m\\033\[1m,\\033\[0m/g' > /tmp/outluxdimKilo-sx
+sx=$(cat /tmp/outluxdimKilo-sx)
+cat /tmp/outluxdimKilo | tail -n1 | cut -d. -f2,2 | sed 's/,/\\033\[31;40;5m\\033\[1m,\\033\[0m/g' > /tmp/outluxdimKilo-dx
+dx=$(cat /tmp/outluxdimKilo-dx)
+echo -e "$sx\033[33;40;5m\033[1m.\033[0m$dx"
+echo ""
+
+echo "$leggoPrefissoMega$(cat /tmp/backemerg-statMega) mega bytes" > /tmp/outluxdimMega
+cat /tmp/outluxdimMega | tail -n1 | cut -d. -f1,1 | sed 's/,/\\033\[32;40;5m\\033\[1m,\\033\[0m/g' > /tmp/outluxdimMega-sx
+sx=$(cat /tmp/outluxdimMega-sx)
+cat /tmp/outluxdimMega | tail -n1 | cut -d. -f2,2 | sed 's/,/\\033\[31;40;5m\\033\[1m,\\033\[0m/g' > /tmp/outluxdimMega-dx
+dx=$(cat /tmp/outluxdimMega-dx)
+echo -e "$sx\033[33;40;5m\033[1m.\033[0m$dx"
+echo ""
+
+echo "$leggoPrefissoGiga$(cat /tmp/backemerg-statGiga) giga bytes" > /tmp/outluxdimGiga
+cat /tmp/outluxdimGiga | tail -n1 | cut -d. -f1,1 | sed 's/,/\\033\[32;40;5m\\033\[1m,\\033\[0m/g' > /tmp/outluxdimGiga-sx
+sx=$(cat /tmp/outluxdimGiga-sx)
+cat /tmp/outluxdimGiga | tail -n1 | cut -d. -f2,2 | sed 's/,/\\033\[31;40;5m\\033\[1m,\\033\[0m/g' > /tmp/outluxdimGiga-dx
+dx=$(cat /tmp/outluxdimGiga-dx)
+echo -e "$sx\033[33;40;5m\033[1m.\033[0m$dx"
+echo ""
 
 fi
 
 exit
 
 fi
+
+## Visto che ci sono gli asterischi, l'utente potrebbe aver espresso anche l'opzione -s di somma
+
+	grep -r "^-s" /tmp/luxdim > /tmp/backemerg-sumOrNot
+
+	stat --format %s /tmp/backemerg-sumOrNot > /tmp/backemerg-sumOrNotBytes
+
+	leggoBytesSum=$(cat /tmp/backemerg-sumOrNotBytes)
+
+	if test $leggoBytesSum -gt 0
+
+	then
+
+		touch /tmp/backemerg-cimiceSomma
+
+	fi
 
 
 ## file selezionati con *. 	e.g. *.pdf OK
@@ -1575,6 +1683,19 @@ cat /tmp/luxdimTargetFile | sed 's/*.*//g' > /tmp/luxdimOneOrWildcardDotFolder
 
 leggoWildcardDotFolder="$(cat /tmp/luxdimOneOrWildcardDotFolder)"
 
+if [ -f /tmp/backemerg-cimiceSomma ]; then
+
+ls leggoWildcardDotFolder > /tmp/luxdimTargetFile
+
+pathNameFile="$(cat /tmp/luxdimTargetFile)"
+
+echo "$pathNameFile" > /tmp/Iluxdim-IMarked
+
+/usr/local/lib/backemerg/notazioneDimensioni/iluxdim.sh
+
+exit
+
+fi
 
 cat /tmp/luxdimTargetFile | sed 's/$leggoWildcardDotFolder//g' > /tmp/luxdimTargetFileIsolato
 
@@ -1633,12 +1754,22 @@ if test $leggoOptionLess == "g"
 then
 
 	leggoPrefissoGiga="$(cat /tmp/luxdimPrefissoGiga)"
-echo " "
-echo "$pathNameFileWildcardDot"
-echo "$leggoPrefissoGiga$(cat /tmp/backemerg-statGiga) giga bytes"
-echo " "
+#echo " "
+#echo "$pathNameFileWildcardDot"
+#echo "$leggoPrefissoGiga$(cat /tmp/backemerg-statGiga) giga bytes"
+#echo " "
 echo "$pathNameFileWildcardDot" | tee -a /tmp/outluxdim &> /dev/null
 echo "$leggoPrefissoGiga$(cat /tmp/backemerg-statGiga) giga bytes" | tee -a /tmp/outluxdim &> /dev/null
+
+cat /tmp/outluxdim | tail -n1 | cut -d. -f1,1 | sed 's/,/\\033\[32;40;5m\\033\[1m,\\033\[0m/g' > /tmp/outluxdim-sx
+sx=$(cat /tmp/outluxdim-sx)
+cat /tmp/outluxdim | tail -n1 | cut -d. -f2,2 | sed 's/,/\\033\[31;40;5m\\033\[1m,\\033\[0m/g' > /tmp/outluxdim-dx
+dx=$(cat /tmp/outluxdim-dx)
+
+echo ""
+echo "$pathNameFileWildcardDot"
+echo -e "$sx\033[33;40;5m\033[1m.\033[0m$dx"
+echo ""
 
 fi
 
@@ -1646,13 +1777,24 @@ if test $leggoOptionLess == "m"
 
 then
 
-	leggoPrefissoGiga="$(cat /tmp/luxdimPrefissoMega)"
-echo " "
-echo "$pathNameFileWildcardDot"
-echo "$leggoPrefissoGiga$(cat /tmp/backemerg-statMega) mega bytes"
-echo " "
+	leggoPrefissoMega="$(cat /tmp/luxdimPrefissoMega)"
+#echo " "
+#echo "$pathNameFileWildcardDot"
+#echo "$leggoPrefissoMega$(cat /tmp/backemerg-statMega) mega bytes"
+#echo " "
 echo "$pathNameFileWildcardDot" | tee -a /tmp/outluxdim &> /dev/null
-echo "$leggoPrefissoGiga$(cat /tmp/backemerg-statMega) mega bytes" | tee -a /tmp/outluxdim &> /dev/null
+echo "$leggoPrefissoMega$(cat /tmp/backemerg-statMega) mega bytes" | tee -a /tmp/outluxdim &> /dev/null
+
+cat /tmp/outluxdim | tail -n1 | cut -d. -f1,1 | sed 's/,/\\033\[32;40;5m\\033\[1m,\\033\[0m/g' > /tmp/outluxdim-sx
+sx=$(cat /tmp/outluxdim-sx)
+cat /tmp/outluxdim | tail -n1 | cut -d. -f2,2 | sed 's/,/\\033\[31;40;5m\\033\[1m,\\033\[0m/g' > /tmp/outluxdim-dx
+dx=$(cat /tmp/outluxdim-dx)
+
+echo ""
+echo "$pathNameFileWildcardDot"
+echo -e "$sx\033[33;40;5m\033[1m.\033[0m$dx"
+echo ""
+
 
 fi
 
@@ -1660,54 +1802,114 @@ if test $leggoOptionLess == "k"
 
 then
 
-	leggoPrefissoGiga="$(cat /tmp/luxdimPrefissoKilo)"
+	leggoPrefissoKilo="$(cat /tmp/luxdimPrefissoKilo)"
 
-echo " "
-echo "$pathNameFileWildcardDot"
-echo "$leggoPrefissoGiga$(cat /tmp/backemerg-statKilo) kilo bytes"
-echo " "
+#echo " "
+#echo "$pathNameFileWildcardDot"
+#echo "$leggoPrefissoKilo$(cat /tmp/backemerg-statKilo) kilo bytes"
+#echo " "
 echo "$pathNameFileWildcardDot" | tee -a /tmp/outluxdim &> /dev/null
-echo "$leggoPrefissoGiga$(cat /tmp/backemerg-statKilo) kilo bytes" | tee -a /tmp/outluxdim &> /dev/null
+echo "$leggoPrefissoKilo$(cat /tmp/backemerg-statKilo) kilo bytes" | tee -a /tmp/outluxdim &> /dev/null
+
+cat /tmp/outluxdim | tail -n1 | cut -d. -f1,1 | sed 's/,/\\033\[32;40;5m\\033\[1m,\\033\[0m/g' > /tmp/outluxdim-sx
+sx=$(cat /tmp/outluxdim-sx)
+cat /tmp/outluxdim | tail -n1 | cut -d. -f2,2 | sed 's/,/\\033\[31;40;5m\\033\[1m,\\033\[0m/g' > /tmp/outluxdim-dx
+dx=$(cat /tmp/outluxdim-dx)
+
+echo ""
+echo "$pathNameFileWildcardDot"
+echo -e "$sx\033[33;40;5m\033[1m.\033[0m$dx"
+echo ""
+
+
+
 fi
 
 if test $leggoOptionLess == "b"
 
 then
 
-echo "$pathNameFileWildcardDot"
-echo "$(cat /tmp/backemerg-stat) bytes"
-echo " "
+#echo "$pathNameFileWildcardDot"
+#echo "$(cat /tmp/backemerg-stat) bytes"
+#echo " "
 echo "$pathNameFileWildcardDot" | tee -a /tmp/outluxdim &> /dev/null
 echo "$(cat /tmp/backemerg-stat) bytes" | tee -a /tmp/outluxdim &> /dev/null
+
+cat /tmp/outluxdim | tail -n1 | cut -d. -f1,1 | sed 's/,/\\033\[32;40;5m\\033\[1m,\\033\[0m/g' > /tmp/outluxdim-sx
+sx=$(cat /tmp/outluxdim-sx)
+cat /tmp/outluxdim | tail -n1 | cut -d. -f2,2 | sed 's/,/\\033\[31;40;5m\\033\[1m,\\033\[0m/g' > /tmp/outluxdim-dx
+dx=$(cat /tmp/outluxdim-dx)
+
+echo ""
+echo "$pathNameFileWildcardDot"
+echo -e "$sx\033[33;40;5m\033[1m.\033[0m$dx"
+echo ""
+
+
 fi
 
 else
 
 	## default mode
-echo " "
-echo " "
-echo "$pathNameFileWildcardDot"
-echo " "
-echo "$(cat /tmp/backemerg-stat) bytes"
-echo " "
-leggoPrefissoMega="$(cat /tmp/luxdimPrefissoKilo)"
-echo "$leggoPrefissoMega$(cat /tmp/backemerg-statKilo) kilo bytes"
+#echo " "
+#echo " "
+#echo "$pathNameFileWildcardDot"
+#echo " "
+#echo "$(cat /tmp/backemerg-stat) bytes"
+#echo " "
+leggoPrefissoKilo="$(cat /tmp/luxdimPrefissoKilo)"
+#echo "$leggoPrefissoMega$(cat /tmp/backemerg-statKilo) kilo bytes"
 
-echo " "
+#echo " "
 leggoPrefissoMega="$(cat /tmp/luxdimPrefissoMega)"
-echo "$leggoPrefissoMega$(cat /tmp/backemerg-statMega) mega bytes"
-echo " "
+#echo "$leggoPrefissoMega$(cat /tmp/backemerg-statMega) mega bytes"
+#echo " "
 leggoPrefissoGiga="$(cat /tmp/luxdimPrefissoGiga)"
-echo "$leggoPrefissoGiga$(cat /tmp/backemerg-statGiga) giga bytes"
+#echo "$leggoPrefissoGiga$(cat /tmp/backemerg-statGiga) giga bytes"
 
-echo " "
+#echo " "
 
 echo "$pathNameFileWildcardDot
 $(cat /tmp/backemerg-stat) bytes
-$leggoPrefissoMega$(cat /tmp/backemerg-statKilo) kilo bytes
+$leggoPrefissoKilo$(cat /tmp/backemerg-statKilo) kilo bytes
 $leggoPrefissoMega$(cat /tmp/backemerg-statMega) mega bytes
 $leggoPrefissoGiga$(cat /tmp/backemerg-statGiga) giga bytes
 " | tee -a /tmp/outluxdim &> /dev/null
+
+echo ""
+echo ""
+echo "$pathNameFileWildcardDot"
+echo "$(cat /tmp/backemerg-stat) bytes"
+echo ""
+
+
+leggoPrefissoKilo="$(cat /tmp/luxdimPrefissoKilo)"
+echo "$leggoPrefissoKilo$(cat /tmp/backemerg-statKilo) kilo bytes" > /tmp/outluxdimKilo
+cat /tmp/outluxdimKilo | tail -n1 | cut -d. -f1,1 | sed 's/,/\\033\[32;40;5m\\033\[1m,\\033\[0m/g' > /tmp/outluxdimKilo-sx
+sx=$(cat /tmp/outluxdimKilo-sx)
+cat /tmp/outluxdimKilo | tail -n1 | cut -d. -f2,2 | sed 's/,/\\033\[31;40;5m\\033\[1m,\\033\[0m/g' > /tmp/outluxdimKilo-dx
+dx=$(cat /tmp/outluxdimKilo-dx)
+echo -e "$sx\033[33;40;5m\033[1m.\033[0m$dx"
+echo ""
+
+leggoPrefissoMega="$(cat /tmp/luxdimPrefissoMega)"
+echo "$leggoPrefissoMega$(cat /tmp/backemerg-statMega) mega bytes" > /tmp/outluxdimMega
+cat /tmp/outluxdimMega | tail -n1 | cut -d. -f1,1 | sed 's/,/\\033\[32;40;5m\\033\[1m,\\033\[0m/g' > /tmp/outluxdimMega-sx
+sx=$(cat /tmp/outluxdimMega-sx)
+cat /tmp/outluxdimMega | tail -n1 | cut -d. -f2,2 | sed 's/,/\\033\[31;40;5m\\033\[1m,\\033\[0m/g' > /tmp/outluxdimMega-dx
+dx=$(cat /tmp/outluxdimMega-dx)
+echo -e "$sx\033[33;40;5m\033[1m.\033[0m$dx"
+echo ""
+
+leggoPrefissoGiga="$(cat /tmp/luxdimPrefissoGiga)"
+echo "$leggoPrefissoGiga$(cat /tmp/backemerg-statGiga) giga bytes" > /tmp/outluxdimGiga
+cat /tmp/outluxdimGiga | tail -n1 | cut -d. -f1,1 | sed 's/,/\\033\[32;40;5m\\033\[1m,\\033\[0m/g' > /tmp/outluxdimGiga-sx
+sx=$(cat /tmp/outluxdimGiga-sx)
+cat /tmp/outluxdimGiga | tail -n1 | cut -d. -f2,2 | sed 's/,/\\033\[31;40;5m\\033\[1m,\\033\[0m/g' > /tmp/outluxdimGiga-dx
+dx=$(cat /tmp/outluxdimGiga-dx)
+echo -e "$sx\033[33;40;5m\033[1m.\033[0m$dx"
+echo ""
+
 
 		## file selezionato con *.estensione
 	fi
@@ -1748,7 +1950,23 @@ else
 
 	leggoWildcardFolder="$(cat /tmp/luxdimOneOrWildcardFolder)"
 
+if [ -f /tmp/backemerg-cimiceSomma ]; then
+
+ls $leggoWildcardFolder > /tmp/luxdimTargetFile
+
+pathNameFile="$(cat /tmp/luxdimTargetFile)"
+
+echo "$pathNameFile" > /tmp/Iluxdim-IMarked
+
+/usr/local/lib/backemerg/notazioneDimensioni/iluxdim.sh
+
+exit
+
+fi
+
 	ls $leggoWildcardFolder > /tmp/luxdimOneOrWildcardList
+
+
 
 	rm -fr /tmp/luxdimOneOrWildcardSplit
 
@@ -1790,12 +2008,22 @@ if test $leggoOptionLess == "g"
 then
 
 	leggoPrefissoGiga="$(cat /tmp/luxdimPrefissoGiga)"
-echo " "
-echo "$pathNameFileWildcard"
-echo "$leggoPrefissoGiga$(cat /tmp/backemerg-statGiga) giga bytes"
-echo " "
+#echo " "
+#echo "$pathNameFileWildcard"
+#echo "$leggoPrefissoGiga$(cat /tmp/backemerg-statGiga) giga bytes"
+#echo " "
 echo "$pathNameFileWildcard"  | tee -a /tmp/outluxdim &> /dev/null
 echo "$leggoPrefissoGiga$(cat /tmp/backemerg-statGiga) giga bytes" | tee -a /tmp/outluxdim &> /dev/null
+
+cat /tmp/outluxdim | tail -n1 | cut -d. -f1,1 | sed 's/,/\\033\[32;40;5m\\033\[1m,\\033\[0m/g' > /tmp/outluxdim-sx
+sx=$(cat /tmp/outluxdim-sx)
+cat /tmp/outluxdim | tail -n1 | cut -d. -f2,2 | sed 's/,/\\033\[31;40;5m\\033\[1m,\\033\[0m/g' > /tmp/outluxdim-dx
+dx=$(cat /tmp/outluxdim-dx)
+
+echo ""
+echo "$pathNameFileWildcardDot"
+echo -e "$sx\033[33;40;5m\033[1m.\033[0m$dx"
+echo ""
 
 fi
 
@@ -1803,13 +2031,24 @@ if test $leggoOptionLess == "m"
 
 then
 
-	leggoPrefissoGiga="$(cat /tmp/luxdimPrefissoMega)"
-echo " "
-echo "$pathNameFileWildcard"
-echo "$leggoPrefissoGiga$(cat /tmp/backemerg-statMega) mega bytes"
-echo " "
+	leggoPrefissoMega="$(cat /tmp/luxdimPrefissoMega)"
+#echo " "
+#echo "$pathNameFileWildcard"
+#echo "$leggoPrefissoMega$(cat /tmp/backemerg-statMega) mega bytes"
+#echo " "
 echo "$pathNameFileWildcard"  | tee -a /tmp/outluxdim &> /dev/null
-echo "$leggoPrefissoGiga$(cat /tmp/backemerg-statMega) mega bytes" | tee -a /tmp/outluxdim &> /dev/null
+echo "$leggoPrefissoMega$(cat /tmp/backemerg-statMega) mega bytes" | tee -a /tmp/outluxdim &> /dev/null
+
+cat /tmp/outluxdim | tail -n1 | cut -d. -f1,1 | sed 's/,/\\033\[32;40;5m\\033\[1m,\\033\[0m/g' > /tmp/outluxdim-sx
+sx=$(cat /tmp/outluxdim-sx)
+cat /tmp/outluxdim | tail -n1 | cut -d. -f2,2 | sed 's/,/\\033\[31;40;5m\\033\[1m,\\033\[0m/g' > /tmp/outluxdim-dx
+dx=$(cat /tmp/outluxdim-dx)
+
+echo ""
+echo "$pathNameFileWildcardDot"
+echo -e "$sx\033[33;40;5m\033[1m.\033[0m$dx"
+echo ""
+
 
 fi
 
@@ -1817,14 +2056,25 @@ if test $leggoOptionLess == "k"
 
 then
 
-	leggoPrefissoGiga="$(cat /tmp/luxdimPrefissoKilo)"
+	leggoPrefissoKilo="$(cat /tmp/luxdimPrefissoKilo)"
 
-echo " "
-echo "$pathNameFileWildcard"
-echo "$leggoPrefissoGiga$(cat /tmp/backemerg-statKilo) kilo bytes"
-echo " "
+#echo " "
+#echo "$pathNameFileWildcard"
+#echo "$leggoPrefissoKilo$(cat /tmp/backemerg-statKilo) kilo bytes"
+#echo " "
 echo "$pathNameFileWildcard"  | tee -a /tmp/outluxdim &> /dev/null
-echo "$leggoPrefissoGiga$(cat /tmp/backemerg-statKilo) kilo bytes" | tee -a /tmp/outluxdim &> /dev/null
+echo "$leggoPrefissoKilo$(cat /tmp/backemerg-statKilo) kilo bytes" | tee -a /tmp/outluxdim &> /dev/null
+
+cat /tmp/outluxdim | tail -n1 | cut -d. -f1,1 | sed 's/,/\\033\[32;40;5m\\033\[1m,\\033\[0m/g' > /tmp/outluxdim-sx
+sx=$(cat /tmp/outluxdim-sx)
+cat /tmp/outluxdim | tail -n1 | cut -d. -f2,2 | sed 's/,/\\033\[31;40;5m\\033\[1m,\\033\[0m/g' > /tmp/outluxdim-dx
+dx=$(cat /tmp/outluxdim-dx)
+
+echo ""
+echo "$pathNameFileWildcardDot"
+echo -e "$sx\033[33;40;5m\033[1m.\033[0m$dx"
+echo ""
+
 fi
 
 if test $leggoOptionLess == "b"
@@ -1841,27 +2091,67 @@ fi
 else
 
 	## default mode
-echo " "
-echo " "
-echo "$pathNameFileWildcard"
-echo " "
-echo "$(cat /tmp/backemerg-stat) bytes"
-echo " "
-leggoPrefissoMega="$(cat /tmp/luxdimPrefissoKilo)"
-echo "$leggoPrefissoMega$(cat /tmp/backemerg-statKilo) kilo bytes"
+#echo " "
+#echo " "
+#echo "$pathNameFileWildcard"
+#echo " "
+#echo "$(cat /tmp/backemerg-stat) bytes"
+#echo " "
+leggoPrefissoKilo="$(cat /tmp/luxdimPrefissoKilo)"
+#echo "$leggoPrefissoMega$(cat /tmp/backemerg-statKilo) kilo bytes"
 
-echo " "
+#echo " "
 leggoPrefissoMega="$(cat /tmp/luxdimPrefissoMega)"
-echo "$leggoPrefissoMega$(cat /tmp/backemerg-statMega) mega bytes"
-echo " "
+#echo "$leggoPrefissoMega$(cat /tmp/backemerg-statMega) mega bytes"
+#echo " "
 leggoPrefissoGiga="$(cat /tmp/luxdimPrefissoGiga)"
-echo "$leggoPrefissoGiga$(cat /tmp/backemerg-statGiga) giga bytes"
+#echo "$leggoPrefissoGiga$(cat /tmp/backemerg-statGiga) giga bytes"
 
 echo " "
 
 echo "$pathNameFileWildcard
 $(cat /tmp/backemerg-stat) bytes
-$leggoPrefissoMega$(cat /tmp/backemerg-statKilo) kilo bytes
+$leggoPrefissoKilo$(cat /tmp/backemerg-statKilo) kilo bytes
+$leggoPrefissoMega$(cat /tmp/backemerg-statMega) mega bytes
+$leggoPrefissoGiga$(cat /tmp/backemerg-statGiga) giga bytes
+" | tee -a /tmp/outluxdim &> /dev/null
+
+echo "$pathNameFileWildcard"
+echo "$(cat /tmp/backemerg-stat) bytes"
+echo ""
+
+
+leggoPrefissoKilo="$(cat /tmp/luxdimPrefissoKilo)"
+echo "$leggoPrefissoKilo$(cat /tmp/backemerg-statKilo) kilo bytes" > /tmp/outluxdimKilo
+cat /tmp/outluxdimKilo | tail -n1 | cut -d. -f1,1 | sed 's/,/\\033\[32;40;5m\\033\[1m,\\033\[0m/g' > /tmp/outluxdimKilo-sx
+sx=$(cat /tmp/outluxdimKilo-sx)
+cat /tmp/outluxdimKilo | tail -n1 | cut -d. -f2,2 | sed 's/,/\\033\[31;40;5m\\033\[1m,\\033\[0m/g' > /tmp/outluxdimKilo-dx
+dx=$(cat /tmp/outluxdimKilo-dx)
+echo -e "$sx\033[33;40;5m\033[1m.\033[0m$dx"
+echo ""
+
+leggoPrefissoMega="$(cat /tmp/luxdimPrefissoMega)"
+echo "$leggoPrefissoMega$(cat /tmp/backemerg-statMega) mega bytes" > /tmp/outluxdimMega
+cat /tmp/outluxdimMega | tail -n1 | cut -d. -f1,1 | sed 's/,/\\033\[32;40;5m\\033\[1m,\\033\[0m/g' > /tmp/outluxdimMega-sx
+sx=$(cat /tmp/outluxdimMega-sx)
+cat /tmp/outluxdimMega | tail -n1 | cut -d. -f2,2 | sed 's/,/\\033\[31;40;5m\\033\[1m,\\033\[0m/g' > /tmp/outluxdimMega-dx
+dx=$(cat /tmp/outluxdimMega-dx)
+echo -e "$sx\033[33;40;5m\033[1m.\033[0m$dx"
+echo ""
+
+leggoPrefissoGiga="$(cat /tmp/luxdimPrefissoGiga)"
+echo "$leggoPrefissoGiga$(cat /tmp/backemerg-statGiga) giga bytes" > /tmp/outluxdimGiga
+cat /tmp/outluxdimGiga | tail -n1 | cut -d. -f1,1 | sed 's/,/\\033\[32;40;5m\\033\[1m,\\033\[0m/g' > /tmp/outluxdimGiga-sx
+sx=$(cat /tmp/outluxdimGiga-sx)
+cat /tmp/outluxdimGiga | tail -n1 | cut -d. -f2,2 | sed 's/,/\\033\[31;40;5m\\033\[1m,\\033\[0m/g' > /tmp/outluxdimGiga-dx
+dx=$(cat /tmp/outluxdimGiga-dx)
+echo -e "$sx\033[33;40;5m\033[1m.\033[0m$dx"
+echo ""
+
+
+echo "$pathNameFileWildcard
+$(cat /tmp/backemerg-stat) bytes
+$leggoPrefissoKilo$(cat /tmp/backemerg-statKilo) kilo bytes
 $leggoPrefissoMega$(cat /tmp/backemerg-statMega) mega bytes
 $leggoPrefissoGiga$(cat /tmp/backemerg-statGiga) giga bytes
 " | tee -a /tmp/outluxdim &> /dev/null
@@ -1886,10 +2176,39 @@ $leggoPrefissoGiga$(cat /tmp/backemerg-statGiga) giga bytes
 
 		path="$(cat /tmp/backemerg-percorsoIsolato)"
 
-		ls $path/$leggoNomeFileIsolato > /tmp/luxdimOneOrWildcardList0
 
-	else
 
+if [ -f /tmp/backemerg-cimiceSomma ]; then
+
+ls $path > /tmp/luxdimTargetFile
+
+pathNameFile=$(cat /tmp/luxdimTargetFile)
+
+echo "$pathNameFile" > /tmp/Iluxdim-IMarked
+
+/usr/local/lib/backemerg/notazioneDimensioni/iluxdim.sh
+
+exit
+
+fi
+
+	ls $path/$leggoNomeFileIsolato > /tmp/luxdimOneOrWildcardList0
+
+else
+
+if [ -f /tmp/backemerg-cimiceSomma ]; then
+
+ls . > /tmp/luxdimTargetFile
+
+pathNameFile=$(cat /tmp/luxdimTargetFile)
+
+echo "$pathNameFile" > /tmp/Iluxdim-IMarked
+
+/usr/local/lib/backemerg/notazioneDimensioni/iluxdim.sh
+
+exit
+
+fi
 	ls $leggoNomeFileIsolato > /tmp/luxdimOneOrWildcardList0
 	
 	fi
@@ -1938,12 +2257,22 @@ if test $leggoOptionLess == "g"
 then
 
 	leggoPrefissoGiga="$(cat /tmp/luxdimPrefissoGiga)"
-echo " "
-echo "$pathNameFileWildcard"
-echo "$leggoPrefissoGiga$(cat /tmp/backemerg-statGiga) giga bytes"
-echo " "
+#echo " "
+#echo "$pathNameFileWildcard"
+#echo "$leggoPrefissoGiga$(cat /tmp/backemerg-statGiga) giga bytes"
+#echo " "
 echo "$pathNameFileWildcard" | tee -a /tmp/outluxdim &> /dev/null
 echo "$leggoPrefissoGiga$(cat /tmp/backemerg-statGiga) giga bytes" | tee -a /tmp/outluxdim &> /dev/null
+
+cat /tmp/outluxdim | tail -n1 | cut -d. -f1,1 | sed 's/,/\\033\[32;40;5m\\033\[1m,\\033\[0m/g' > /tmp/outluxdim-sx
+sx=$(cat /tmp/outluxdim-sx)
+cat /tmp/outluxdim | tail -n1 | cut -d. -f2,2 | sed 's/,/\\033\[31;40;5m\\033\[1m,\\033\[0m/g' > /tmp/outluxdim-dx
+dx=$(cat /tmp/outluxdim-dx)
+
+echo ""
+echo "$pathNameFileWildcardDot"
+echo -e "$sx\033[33;40;5m\033[1m.\033[0m$dx"
+echo ""
 
 fi
 
@@ -1951,13 +2280,23 @@ if test $leggoOptionLess == "m"
 
 then
 
-	leggoPrefissoGiga="$(cat /tmp/luxdimPrefissoMega)"
-echo " "
-echo "$pathNameFileWildcard"
-echo "$leggoPrefissoGiga$(cat /tmp/backemerg-statMega) mega bytes"
-echo " "
+#	leggoPrefissoMega="$(cat /tmp/luxdimPrefissoMega)"
+#echo " "
+#echo "$pathNameFileWildcard"
+#echo "$leggoPrefissoMega$(cat /tmp/backemerg-statMega) mega bytes"
+#echo " "
 echo "$pathNameFileWildcard" | tee -a /tmp/outluxdim &> /dev/null
-echo "$leggoPrefissoGiga$(cat /tmp/backemerg-statMega) mega bytes" | tee -a /tmp/outluxdim &> /dev/null
+echo "$leggoPrefissoMega$(cat /tmp/backemerg-statMega) mega bytes" | tee -a /tmp/outluxdim &> /dev/null
+
+cat /tmp/outluxdim | tail -n1 | cut -d. -f1,1 | sed 's/,/\\033\[32;40;5m\\033\[1m,\\033\[0m/g' > /tmp/outluxdim-sx
+sx=$(cat /tmp/outluxdim-sx)
+cat /tmp/outluxdim | tail -n1 | cut -d. -f2,2 | sed 's/,/\\033\[31;40;5m\\033\[1m,\\033\[0m/g' > /tmp/outluxdim-dx
+dx=$(cat /tmp/outluxdim-dx)
+
+echo ""
+echo "$pathNameFileWildcardDot"
+echo -e "$sx\033[33;40;5m\033[1m.\033[0m$dx"
+echo ""
 
 fi
 
@@ -1965,25 +2304,47 @@ if test $leggoOptionLess == "k"
 
 then
 
-	leggoPrefissoGiga="$(cat /tmp/luxdimPrefissoKilo)"
+#	leggoPrefissoKilo="$(cat /tmp/luxdimPrefissoKilo)"
 
-echo " "
-echo "$pathNameFileWildcard"
-echo "$leggoPrefissoGiga$(cat /tmp/backemerg-statKilo) kilo bytes"
-echo " "
+#echo " "
+#echo "$pathNameFileWildcard"
+#echo "$leggoPrefissoKilo$(cat /tmp/backemerg-statKilo) kilo bytes"
+#echo " "
 echo "$pathNameFileWildcard" | tee -a /tmp/outluxdim &> /dev/null
-echo "$leggoPrefissoGiga$(cat /tmp/backemerg-statKilo) kilo bytes" | tee -a /tmp/outluxdim &> /dev/null
+echo "$leggoPrefissoKilo$(cat /tmp/backemerg-statKilo) kilo bytes" | tee -a /tmp/outluxdim &> /dev/null
+
+cat /tmp/outluxdim | tail -n1 | cut -d. -f1,1 | sed 's/,/\\033\[32;40;5m\\033\[1m,\\033\[0m/g' > /tmp/outluxdim-sx
+sx=$(cat /tmp/outluxdim-sx)
+cat /tmp/outluxdim | tail -n1 | cut -d. -f2,2 | sed 's/,/\\033\[31;40;5m\\033\[1m,\\033\[0m/g' > /tmp/outluxdim-dx
+dx=$(cat /tmp/outluxdim-dx)
+
+echo ""
+echo "$pathNameFileWildcardDot"
+echo -e "$sx\033[33;40;5m\033[1m.\033[0m$dx"
+echo ""
+
 fi
 
 if test $leggoOptionLess == "b"
 
 then
 
-echo "$pathNameFileWildcard"
-echo "$(cat /tmp/backemerg-stat) bytes"
-echo " "
+#echo "$pathNameFileWildcard"
+#echo "$(cat /tmp/backemerg-stat) bytes"
+#echo " "
 echo "$pathNameFileWildcard" | tee -a /tmp/outluxdim &> /dev/null
 echo "$(cat /tmp/backemerg-stat) bytes" | tee -a /tmp/outluxdim &> /dev/null
+
+cat /tmp/outluxdim | tail -n1 | cut -d. -f1,1 | sed 's/,/\\033\[32;40;5m\\033\[1m,\\033\[0m/g' > /tmp/outluxdim-sx
+sx=$(cat /tmp/outluxdim-sx)
+cat /tmp/outluxdim | tail -n1 | cut -d. -f2,2 | sed 's/,/\\033\[31;40;5m\\033\[1m,\\033\[0m/g' > /tmp/outluxdim-dx
+dx=$(cat /tmp/outluxdim-dx)
+
+echo ""
+echo "$pathNameFileWildcardDot"
+echo -e "$sx\033[33;40;5m\033[1m.\033[0m$dx"
+echo ""
+
 fi
 
 else
@@ -1995,24 +2356,65 @@ echo "$pathNameFileWildcard"
 echo " "
 echo "$(cat /tmp/backemerg-stat) bytes"
 echo " "
-leggoPrefissoMega="$(cat /tmp/luxdimPrefissoKilo)"
-echo "$leggoPrefissoMega$(cat /tmp/backemerg-statKilo) kilo bytes"
+leggoPrefissoKilo="$(cat /tmp/luxdimPrefissoKilo)"
+#echo "$leggoPrefissoKilo$(cat /tmp/backemerg-statKilo) kilo bytes"
 
 echo " "
 leggoPrefissoMega="$(cat /tmp/luxdimPrefissoMega)"
-echo "$leggoPrefissoMega$(cat /tmp/backemerg-statMega) mega bytes"
+#echo "$leggoPrefissoMega$(cat /tmp/backemerg-statMega) mega bytes"
 echo " "
 leggoPrefissoGiga="$(cat /tmp/luxdimPrefissoGiga)"
-echo "$leggoPrefissoGiga$(cat /tmp/backemerg-statGiga) giga bytes"
+#echo "$leggoPrefissoGiga$(cat /tmp/backemerg-statGiga) giga bytes"
 
 echo " "
 
 echo "$pathNameFileWildcard
 $(cat /tmp/backemerg-stat) bytes
-$leggoPrefissoMega$(cat /tmp/backemerg-statKilo) kilo bytes
+$leggoPrefissoKilo$(cat /tmp/backemerg-statKilo) kilo bytes
 $leggoPrefissoMega$(cat /tmp/backemerg-statMega) mega bytes
 $leggoPrefissoGiga$(cat /tmp/backemerg-statGiga) giga bytes
 " | tee -a /tmp/outluxdim &> /dev/null
+
+echo "$pathNameFileWildcard"
+echo "$(cat /tmp/backemerg-stat) bytes"
+echo ""
+
+
+leggoPrefissoKilo="$(cat /tmp/luxdimPrefissoKilo)"
+echo "$leggoPrefissoKilo$(cat /tmp/backemerg-statKilo) kilo bytes" > /tmp/outluxdimKilo
+cat /tmp/outluxdimKilo | tail -n1 | cut -d. -f1,1 | sed 's/,/\\033\[32;40;5m\\033\[1m,\\033\[0m/g' > /tmp/outluxdimKilo-sx
+sx=$(cat /tmp/outluxdimKilo-sx)
+cat /tmp/outluxdimKilo | tail -n1 | cut -d. -f2,2 | sed 's/,/\\033\[31;40;5m\\033\[1m,\\033\[0m/g' > /tmp/outluxdimKilo-dx
+dx=$(cat /tmp/outluxdimKilo-dx)
+echo -e "$sx\033[33;40;5m\033[1m.\033[0m$dx"
+echo ""
+
+leggoPrefissoMega="$(cat /tmp/luxdimPrefissoMega)"
+echo "$leggoPrefissoMega$(cat /tmp/backemerg-statMega) mega bytes" > /tmp/outluxdimMega
+cat /tmp/outluxdimMega | tail -n1 | cut -d. -f1,1 | sed 's/,/\\033\[32;40;5m\\033\[1m,\\033\[0m/g' > /tmp/outluxdimMega-sx
+sx=$(cat /tmp/outluxdimMega-sx)
+cat /tmp/outluxdimMega | tail -n1 | cut -d. -f2,2 | sed 's/,/\\033\[31;40;5m\\033\[1m,\\033\[0m/g' > /tmp/outluxdimMega-dx
+dx=$(cat /tmp/outluxdimMega-dx)
+echo -e "$sx\033[33;40;5m\033[1m.\033[0m$dx"
+echo ""
+
+leggoPrefissoGiga="$(cat /tmp/luxdimPrefissoGiga)"
+echo "$leggoPrefissoGiga$(cat /tmp/backemerg-statGiga) giga bytes" > /tmp/outluxdimGiga
+cat /tmp/outluxdimGiga | tail -n1 | cut -d. -f1,1 | sed 's/,/\\033\[32;40;5m\\033\[1m,\\033\[0m/g' > /tmp/outluxdimGiga-sx
+sx=$(cat /tmp/outluxdimGiga-sx)
+cat /tmp/outluxdimGiga | tail -n1 | cut -d. -f2,2 | sed 's/,/\\033\[31;40;5m\\033\[1m,\\033\[0m/g' > /tmp/outluxdimGiga-dx
+dx=$(cat /tmp/outluxdimGiga-dx)
+echo -e "$sx\033[33;40;5m\033[1m.\033[0m$dx"
+echo ""
+
+
+echo "$pathNameFileWildcard
+$(cat /tmp/backemerg-stat) bytes
+$leggoPrefissoKilo$(cat /tmp/backemerg-statKilo) kilo bytes
+$leggoPrefissoMega$(cat /tmp/backemerg-statMega) mega bytes
+$leggoPrefissoGiga$(cat /tmp/backemerg-statGiga) giga bytes
+" | tee -a /tmp/outluxdim &> /dev/null
+
 
 			## file selezionato con * con con *.estensione
 
