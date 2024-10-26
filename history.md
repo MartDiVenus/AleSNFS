@@ -65,3 +65,12 @@ Added youtube tutorial about luxdim, valedim; see README.md (Links) or luxdim, v
 
 Soon, AleSNFS v2.1.0 GnuPG signature too.
 
+
+_______________
+
+	v2.2.0: Oct 12, 2024	
+
+Various corrections and improvements.
+luxdim, valedim: added coloured output on stdout.
+
+
