@@ -142,7 +142,7 @@ Output is written on stdout and in:
 https://github.com/MartDiVenus/AleSNFS/notazioneDimensioni
 
 Copyright:
-Copyright (C) 2023.08.29 Mario Fantini (marfant7@gmail.com).
+Copyright (C) 2023.08.29 Mario Fantini (ing.mariofantini@gmail.com).
 Bash copyright applies to its Mario Fantini's pseudo options usage.
 GNU copyright applies to its Mario Fantini's GNU tools usage.
 VIM copyright applies to its Mario Fantini's VIM tools usage.

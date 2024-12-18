@@ -1,7 +1,7 @@
 #!/bin/bash
 
 
-## Copyright (C) 2019.04.07 Mario Fantini marfant7@gmail.com
+## Copyright (C) 2019.04.07 Mario Fantini ing.mariofantini@gmail.com
 ## https://martlux.ns0.it:4000/cluster/securing/backemerg
 
 ## This program is free software: you can redistribute it and/or modify

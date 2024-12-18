@@ -146,10 +146,10 @@ echo "Usage examples:
 ...
 
 
-Author: Mario Fantini (marfant7@gmail.com)
+Author: Mario Fantini (ing.mariofantini@gmail.com)
 
 Copyright:
-Copyright (C) 2023.08.29 Mario Fantini (marfant7@gmail.com).
+Copyright (C) 2023.08.29 Mario Fantini (ing.mariofantini@gmail.com).
 Bash copyright applies to its Mario Fantini's pseudo options usage.
 GNU copyright applies to its Mario Fantini's GNU tools usage.
 VIM copyright applies to its Mario Fantini's VIM usage.
