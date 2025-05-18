@@ -63,7 +63,7 @@ https://youtu.be/wXrcPyFcFG0
 
 # Warranty and Copyright
 
-Copyright (C) 2019.04.07 Mario Fantini ing.mariofantini@gmail.com
+Copyright (C) 2019.04.07 Mario Fantini marfant7@gmail.com
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the

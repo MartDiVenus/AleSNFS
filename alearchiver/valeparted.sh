@@ -4,7 +4,7 @@
 ##        with X session {{{1
 ## /usr/local/bin/valeparted
 ## Title: valeparted.sh {{{1
-## Author: Mario Fantini ing.mariofantini@gmail.com {{{1
+## Author: Mario Fantini marfant7@gmail.com {{{1
 
 ## Copyright (C) 2022.02.27 {{{1 
 ## Creative Commons by-nc-sa-eu
@@ -655,7 +655,7 @@ vel
 sudo umount /mnt/'folder'
 
 Copyright:
-Copyright (C) 2023.08.29 Mario Fantini (ing.mariofantini@gmail.com).
+Copyright (C) 2023.08.29 Mario Fantini (marfant7@gmail.com).
 Bash copyright applies to its Mario Fantini's pseudo options.
 GNU copyright applies to its Mario Fantini's GNU tools usage.
 And so on.
