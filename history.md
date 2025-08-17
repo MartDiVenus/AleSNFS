@@ -74,3 +74,9 @@ Various corrections and improvements.
 luxdim, valedim: added coloured output on stdout.
 
 
+_______________
+
+	v2.3.0: Jul 05, 2025	
+
+Various corrections and improvements.
+
