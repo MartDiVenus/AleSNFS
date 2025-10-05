@@ -1,0 +1,36 @@
+I formati supportati sono: 
+rar, tar, tar.xz, zip.
+
+		
+Per qualsiasi formato, i file compressi che originari sono cartelle,
+verranno estratti con la custodia.
+	
+	
+I file compressi devono avere il permesso in lettura almeno per l'utente $USER.
+	
+	
+	
+
+
+Scegli il percorso di destinazione del file estratto:
+	
+	
+alpha) la stesso del relativo file compresso;
+	
+	
+beta) esprimi un nuovo percorso;
+	
+	
+
+gamma) usa comodamente i percorsi specificati in
+       /tmp/tmp/valeNetrw-DMarked
+	
+	
+delta) /tmp/Alearchiver    
+       [consigliato per la \"sola lettura\" e per non impegnare il disco].
+	
+	
+
+Digita <<alpha>> o <<beta>> o <<gamma>> o <<delta>>, e premi Enter.
+	
+	

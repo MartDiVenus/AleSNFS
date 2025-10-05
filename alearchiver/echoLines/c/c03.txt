@@ -1,0 +1,2 @@
+Digita, senza la </> finale, il percorso di destinazione del file compresso
+
