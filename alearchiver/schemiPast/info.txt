@@ -1,1 +1,0 @@
-c.sh aggiornato e testato con successo anche con *, *.xxx, y*.
